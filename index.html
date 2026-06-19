@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="صمّم كليكر سويتشات ميكانيكية خاص بك"><meta name="theme-color" content="#0d0f0e">
+  <title>نَقْرة | صمّم كليكرك</title><link rel="icon" href="./favicon.svg">
+  <style>
+
+:root {
+  --bg: #f2f2ed;
+  --bg-deep: #e8e9e3;
+  --panel: rgba(255,255,255,.72);
+  --panel-solid: #fafaf7;
+  --text: #171918;
+  --muted: #6d706c;
+  --line: rgba(20,23,20,.1);
+  --accent: #c8f135;
+  --accent-strong: #b8df25;
+  --shadow: 0 24px 80px rgba(32,35,30,.11);
+  --radius: 28px;
+  --nav: rgba(242,242,237,.8);
+}
+
+[data-theme="dark"] {
+  --bg: #0d0f0e;
+  --bg-deep: #131614;
+  --panel: rgba(28,31,29,.72);
+  --panel-solid: #171a18;
+  --text: #f3f4ed;
+  --muted: #9da19b;
+  --line: rgba(255,255,255,.1);
+  --accent: #d7ff45;
+  --accent-strong: #bce524;
+  --shadow: 0 28px 90px rgba(0,0,0,.32);
+  --nav: rgba(13,15,14,.78);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: "Segoe UI", Tahoma, Arial, sans-serif; overflow-x: hidden; transition: background .35s ease, color .35s ease; }
+button, a, input { font: inherit; }
+button { color: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+a { color: inherit; text-decoration: none; }
+::selection { color: #10120f; background: var(--accent); }
+.section-shell { width: min(1180px, calc(100% - 48px)); margin-inline: auto; }
+.glass-card { background: var(--panel); border: 1px solid var(--line); box-shadow: var(--shadow); backdrop-filter: blur(24px); }
+
+.nav-wrap { position: fixed; top: 0; inset-inline: 0; z-index: 100; background: var(--nav); border-bottom: 1px solid var(--line); backdrop-filter: blur(22px); }
+.navbar { height: 74px; display: flex; align-items: center; justify-content: space-between; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 850; }
+.logo > i { display: grid; place-items: center; width: 39px; height: 39px; border-radius: 12px; background: var(--accent); color: #141713; font-style: normal; font-size: 22px; transform: rotate(-5deg); box-shadow: inset 0 -3px rgba(0,0,0,.11); }
+.logo > span { display: flex; flex-direction: column; line-height: 1; font-size: 20px; }
+.logo small { font-size: 7px; letter-spacing: 4px; color: var(--muted); margin-top: 5px; font-weight: 700; }
+.nav-links { display: flex; gap: 34px; font-size: 13px; font-weight: 650; color: var(--muted); }
+.nav-links a { position: relative; transition: color .2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-links a::after { content: ""; position: absolute; bottom: -10px; right: 0; width: 0; height: 2px; background: var(--accent); transition: width .2s; }
+.nav-links a:hover::after { width: 100%; }
+.nav-actions { display: flex; align-items: center; gap: 8px; }
+.icon-btn, .cart-btn, .menu-btn { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line); background: var(--panel); cursor: pointer; transition: transform .2s, background .2s; }
+.icon-btn:hover, .cart-btn:hover { transform: translateY(-2px); background: var(--panel-solid); }
+.cart-btn { position: relative; }
+.cart-btn > span { font-size: 22px; transform: rotate(180deg); }
+.cart-btn i { position: absolute; top: -3px; right: -4px; width: 18px; height: 18px; display: grid; place-items: center; background: var(--accent); color: #111; border-radius: 50%; font-size: 9px; font-weight: 800; font-style: normal; border: 2px solid var(--bg); }
+.menu-btn { display: none; }
+
+.hero { min-height: 720px; padding-top: 132px; display: grid; grid-template-columns: .9fr 1.1fr; align-items: center; gap: 30px; }
+.hero-copy { position: relative; z-index: 2; }
+.hero-badge { display: inline-flex; align-items: center; gap: 9px; padding: 8px 12px; border: 1px solid var(--line); background: var(--panel); border-radius: 100px; color: var(--muted); font-size: 11px; font-weight: 650; }
+.hero-badge i { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 5px rgba(210,250,60,.1); }
+.hero h1 { margin: 24px 0 18px; font-size: clamp(64px, 7.2vw, 105px); line-height: .92; letter-spacing: -7px; font-weight: 900; }
+.hero h1 span { color: transparent; -webkit-text-stroke: 1px var(--muted); opacity: .85; }
+.hero-copy > p { color: var(--muted); max-width: 470px; font-size: 17px; line-height: 1.85; margin: 0; }
+.hero-actions { margin-top: 29px; display: flex; align-items: center; gap: 22px; }
+.btn-primary { border: 0; background: var(--accent); color: #141713; padding: 14px 20px; border-radius: 14px; font-weight: 800; cursor: pointer; display: inline-flex; justify-content: center; align-items: center; gap: 32px; box-shadow: 0 8px 24px rgba(201,241,53,.16), inset 0 -3px rgba(0,0,0,.1); transition: transform .2s, box-shadow .2s, background .2s; }
+.btn-primary:hover { transform: translateY(-3px); background: var(--accent-strong); box-shadow: 0 14px 34px rgba(201,241,53,.24), inset 0 -3px rgba(0,0,0,.08); }
+.hero-btn { padding: 17px 22px; min-width: 176px; }
+.text-link { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; }
+.text-link i { width: 31px; height: 31px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line); font-style: normal; font-size: 9px; }
+.hero-proof { display: flex; align-items: center; gap: 14px; margin-top: 37px; }
+.avatars { display: flex; direction: ltr; }
+.avatars span { width: 33px; height: 33px; display: grid; place-items: center; border-radius: 50%; margin-left: -8px; border: 2px solid var(--bg); background: #cc8068; color: white; font-size: 10px; }
+.avatars span:nth-child(2) { background: #56768c; }.avatars span:nth-child(3) { background: #8a744f; }.avatars span:last-child { background: var(--panel-solid); color: var(--text); }
+.hero-proof > div:last-child { display: flex; flex-direction: column; gap: 4px; font-size: 10px; }
+.hero-proof > div:last-child > span { color: #e7bb38; letter-spacing: 1px; }.hero-proof small { color: var(--muted); letter-spacing: 0; }
+.hero-visual { min-height: 560px; position: relative; display: grid; place-items: center; }
+.hero-visual::before { content: ""; position: absolute; width: 490px; height: 490px; border-radius: 50%; background: radial-gradient(circle, rgba(205,247,52,.17), transparent 62%); filter: blur(10px); }
+.hero-orbit { position: absolute; border: 1px solid var(--line); border-radius: 50%; transform: rotate(-15deg); }
+.orbit-one { width: 520px; height: 330px; }.orbit-two { width: 620px; height: 440px; opacity: .45; }
+.floating-note { position: absolute; z-index: 5; display: flex; align-items: center; gap: 10px; background: var(--panel); border: 1px solid var(--line); border-radius: 15px; padding: 11px 14px; backdrop-filter: blur(14px); box-shadow: 0 10px 40px rgba(0,0,0,.12); animation: float 4s ease-in-out infinite; }
+.floating-note > i { width: 23px; height: 23px; border-radius: 7px; box-shadow: inset 0 -4px rgba(0,0,0,.18); }
+.floating-note small, .floating-note b { display: block; }.floating-note small { font-size: 9px; color: var(--muted); }.floating-note b { font-size: 11px; margin-top: 2px; }
+.note-one { top: 23%; right: 3%; }.note-two { bottom: 21%; left: 1%; animation-delay: -2s; }.note-two > span { font-size: 24px; color: var(--accent); }
+@keyframes float { 50% { transform: translateY(-8px); } }
+
+.trust-strip { border-block: 1px solid var(--line); background: var(--panel); }
+.trust-strip > div { min-height: 80px; display: grid; grid-template-columns: repeat(4, 1fr); align-items: center; }
+.trust-strip span { display: flex; align-items: center; justify-content: center; gap: 9px; font-size: 12px; font-weight: 700; border-left: 1px solid var(--line); }.trust-strip span:last-child { border: 0; }.trust-strip i { font-style: normal; color: var(--accent-strong); font-size: 20px; }
+
+.section-heading { margin-bottom: 48px; }.section-heading.centered { text-align: center; }.section-heading .eyebrow, .eyebrow { display: block; color: var(--accent-strong); font-size: 11px; letter-spacing: 2px; font-weight: 800; margin-bottom: 14px; }.section-heading h2, .faq h2 { font-size: clamp(34px, 4vw, 54px); line-height: 1.15; letter-spacing: -2.5px; margin: 0; }.section-heading > p, .section-heading > div + p { color: var(--muted); line-height: 1.8; font-size: 14px; margin: 15px auto 0; }
+.section-heading.row { display: flex; justify-content: space-between; align-items: end; }.section-heading.row > p { margin: 0; text-align: left; }
+
+.features { padding-block: 115px; }
+.feature-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.feature-grid article { min-height: 235px; padding: 25px; border: 1px solid var(--line); border-radius: 22px; background: var(--panel); position: relative; transition: transform .3s, border-color .3s; overflow: hidden; }
+.feature-grid article:hover { transform: translateY(-7px); border-color: rgba(202,241,53,.4); }.feature-grid article.featured { background: var(--accent); color: #141713; }.feature-grid article > i { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 14px; background: var(--bg-deep); font-style: normal; font-size: 22px; }.feature-grid .featured > i { background: rgba(20,23,19,.11); }.feature-grid h3 { margin: 35px 0 9px; font-size: 18px; }.feature-grid p { color: var(--muted); margin: 0; font-size: 12px; line-height: 1.8; }.feature-grid .featured p { color: rgba(20,23,19,.67); }.feature-grid article > span { position: absolute; left: 20px; top: 20px; font-size: 15px; opacity: .55; }
+
+/* Product model */
+.product-stage { position: relative; width: 100%; min-height: 340px; display: grid; place-items: center; perspective: 1100px; isolation: isolate; }
+.product-stage .stage-glow { position: absolute; width: 68%; height: 38%; bottom: 20%; border-radius: 50%; background: color-mix(in srgb, var(--switch) 20%, transparent); filter: blur(35px); }
+.clicker-product { position: relative; z-index: 2; transform: rotateX(60deg) rotateZ(-19deg) translateY(-8px); transform-style: preserve-3d; transition: transform .5s ease; filter: drop-shadow(24px 35px 22px rgba(0,0,0,.24)); }
+.product-stage:hover .clicker-product { transform: rotateX(55deg) rotateZ(-13deg) translateY(-14px) scale(1.02); }
+.base-shell { min-width: 178px; min-height: 134px; padding: 17px 17px 26px; background: var(--base); border-radius: 23px; border: 1px solid rgba(255,255,255,.24); box-shadow: inset 0 -10px 15px rgba(0,0,0,.21), inset 0 4px 5px rgba(255,255,255,.18), 0 9px 0 color-mix(in srgb, var(--base) 62%, #050505); position: relative; transform-style: preserve-3d; transition: background .35s, min-width .35s; }
+.is-clear .base-shell { backdrop-filter: blur(10px); border-color: rgba(220,240,242,.5); }
+.base-inset { display: grid; grid-template-columns: repeat(3, 54px); gap: 9px; padding: 8px; border-radius: 13px; background: rgba(0,0,0,.12); box-shadow: inset 0 2px 5px rgba(0,0,0,.28); }
+.count-1 .base-inset { grid-template-columns: 54px; }.count-2 .base-inset { grid-template-columns: repeat(2,54px); }.count-4 .base-inset, .count-5 .base-inset { grid-template-columns: repeat(3,54px); }.count-7 .base-inset, .count-8 .base-inset, .count-9 .base-inset { grid-template-columns: repeat(3,54px); }
+.switch-stack { width: 54px; height: 54px; position: relative; transform-style: preserve-3d; animation: popIn .4s both; }
+@keyframes popIn { from { opacity: 0; transform: translateZ(35px) scale(.72); } }
+.switch-body { position: absolute; inset: 5px; border-radius: 6px; background: var(--switch); box-shadow: 0 5px 0 color-mix(in srgb, var(--switch) 60%, #111), inset 0 2px rgba(255,255,255,.25); }.switch-body i { position: absolute; width: 17px; height: 17px; border-radius: 4px; background: color-mix(in srgb, var(--switch) 70%, white); left: 50%; top: 50%; transform: translate(-50%,-50%); }
+.keycap { position: absolute; inset: -1px; z-index: 2; display: grid; place-items: center; border-radius: 9px; background: var(--keycap); color: var(--key-text); border: 1px solid rgba(255,255,255,.25); box-shadow: inset 0 -8px 9px rgba(0,0,0,.16), inset 0 4px 3px rgba(255,255,255,.25), 0 8px 0 color-mix(in srgb, var(--keycap) 65%, #111); transform: translateZ(17px); transition: background .3s, color .3s; }.keycap b { font-size: 20px; text-shadow: 0 1px rgba(255,255,255,.2); transform: rotateZ(19deg); }.keycap-special b { font-size: 23px; }
+.brand-mark { position: absolute; bottom: 8px; left: 14px; font-size: 7px; font-weight: 900; color: rgba(255,255,255,.48); letter-spacing: 1px; }
+.keychain { position: absolute; top: 38px; right: -58px; width: 70px; height: 45px; border: 7px solid var(--chain); border-radius: 50%; box-shadow: inset 2px 2px rgba(255,255,255,.45), 2px 4px 6px rgba(0,0,0,.28); }.keychain span { position: absolute; width: 30px; height: 10px; background: var(--chain); left: -20px; top: 10px; border-radius: 4px; }.keychain i { position: absolute; width: 12px; height: 12px; border: 3px solid var(--chain); left: -28px; top: 9px; border-radius: 50%; }
+.drag-hint { position: absolute; bottom: 11px; color: var(--muted); font-size: 10px; display: flex; align-items: center; gap: 7px; }.drag-hint span { font-size: 16px; }
+.product-stage.compact { min-height: 100%; transform: scale(.75); }.product-stage.compact .clicker-product { filter: drop-shadow(17px 25px 15px rgba(0,0,0,.24)); }
+
+/* Configurator */
+.config-section { padding: 80px 0 120px; }.config-heading { display: flex; align-items: end; justify-content: space-between; }.config-heading > p { max-width: 300px; margin: 0; text-align: left; }
+.config-layout { display: grid; grid-template-columns: minmax(0,1.3fr) minmax(350px,.8fr); gap: 20px; align-items: start; }
+.config-form { border-radius: var(--radius); overflow: hidden; min-height: 710px; display: flex; flex-direction: column; }
+.stepper { display: grid; grid-template-columns: repeat(5,1fr); border-bottom: 1px solid var(--line); padding: 0 26px; }
+.stepper button { min-height: 84px; background: none; border: 0; color: var(--muted); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; position: relative; font-size: 11px; }.stepper button::after { content: ""; position: absolute; bottom: -1px; width: 0; height: 2px; background: var(--accent); transition: width .25s; }.stepper button.active::after { width: 76%; }.stepper button.active { color: var(--text); }.stepper button i { width: 23px; height: 23px; border-radius: 50%; display: grid; place-items: center; font-style: normal; background: var(--bg-deep); font-size: 9px; }.stepper button.active i, .stepper button.done i { color: #111; background: var(--accent); }
+.step-content { padding: 31px 35px 20px; flex: 1; animation: reveal .35s ease; }.step-header { display: flex; gap: 17px; align-items: start; margin-bottom: 29px; }.step-header > span { font-size: 10px; color: var(--accent-strong); font-weight: 800; margin-top: 8px; }.step-header h3 { margin: 0 0 6px; font-size: 25px; letter-spacing: -.8px; }.step-header p { margin: 0; color: var(--muted); font-size: 12px; }.step-actions { display: flex; justify-content: space-between; padding: 17px 35px; border-top: 1px solid var(--line); }.step-actions .btn-primary { min-width: 130px; }.btn-ghost { border: 1px solid var(--line); background: transparent; padding: 12px 18px; border-radius: 13px; cursor: pointer; font-weight: 700; transition: background .2s; }.btn-ghost:hover { background: var(--bg-deep); }.btn-ghost:disabled { opacity: .3; cursor: default; }
+@keyframes reveal { from { opacity: 0; transform: translateY(8px); } }
+.number-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }.number-grid button { height: 105px; border: 1px solid var(--line); border-radius: 17px; background: var(--bg-deep); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform .2s, border-color .2s, background .2s; position: relative; }.number-grid button:hover { transform: translateY(-3px); }.number-grid button.selected { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 9%, var(--bg-deep)); box-shadow: inset 0 0 0 1px var(--accent); }.number-grid button.selected::after { content: "✓"; position: absolute; top: 8px; left: 9px; width: 17px; height: 17px; display: grid; place-items: center; background: var(--accent); color: #111; border-radius: 50%; font-size: 9px; }.number-grid b { font-size: 27px; }.number-grid span { color: var(--muted); font-size: 10px; margin-top: 2px; }
+.color-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 9px; }.color-grid button { min-width: 0; height: 86px; border: 1px solid var(--line); border-radius: 15px; background: var(--bg-deep); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; transition: border-color .2s, transform .2s; }.color-grid button:hover { transform: translateY(-2px); }.color-grid button.selected { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }.color-grid button i { width: 34px; height: 34px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(127,127,127,.2), 0 3px 8px rgba(0,0,0,.15); position: relative; }.color-grid button.selected i::after { content: "✓"; position: absolute; inset: 0; display: grid; place-items: center; color: white; text-shadow: 0 1px 3px #000; font-size: 11px; }.color-grid i.transparent { background-image: linear-gradient(45deg,#bbb 25%,transparent 25%),linear-gradient(-45deg,#bbb 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#bbb 75%),linear-gradient(-45deg,transparent 75%,#bbb 75%) !important; background-size: 10px 10px !important; background-position: 0 0,0 5px,5px -5px,-5px 0 !important; }.color-grid button span { font-size: 9px; color: var(--muted); }.color-grid.compact { grid-template-columns: repeat(9,1fr); }.color-grid.compact button { height: 51px; background: transparent; border-radius: 11px; }.color-grid.compact button i { width: 25px; height: 25px; }.color-grid.compact button span { display: none; }
+.switch-list { display: grid; gap: 8px; max-height: 435px; overflow: auto; padding-left: 4px; }.switch-list button { display: grid; grid-template-columns: 56px 1fr auto; align-items: center; gap: 14px; text-align: right; padding: 11px; border-radius: 15px; border: 1px solid var(--line); background: var(--bg-deep); cursor: pointer; transition: border-color .2s, transform .2s; }.switch-list button:hover { transform: translateX(-3px); }.switch-list button.selected { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }.switch-thumb { width: 52px; height: 52px; display: grid; place-items: center; border-radius: 13px; background: color-mix(in srgb, var(--accent) 17%, var(--panel-solid)); }.switch-thumb i { width: 30px; height: 30px; background: var(--accent); border-radius: 6px; box-shadow: inset 0 -6px rgba(0,0,0,.18), 0 4px 0 color-mix(in srgb, var(--accent) 60%, #111); position: relative; }.switch-thumb i::after { content: "+"; position: absolute; inset: 0; display: grid; place-items: center; color: rgba(0,0,0,.45); font-weight: 900; }.switch-copy { display: flex; flex-direction: column; gap: 2px; }.switch-copy small { color: var(--muted); font-size: 8px; text-transform: uppercase; letter-spacing: 1px; }.switch-copy b { font-size: 13px; direction: ltr; text-align: right; }.switch-copy em { font-size: 10px; color: var(--muted); font-style: normal; }.switch-list strong { font-size: 11px; color: var(--accent-strong); text-align: left; }.switch-list strong small { display: block; color: var(--muted); font-size: 7px; margin-top: 3px; }
+.category-tabs { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 22px; }.category-tabs button, .keychain-choice button { min-height: 100px; border: 1px solid var(--line); background: var(--bg-deep); border-radius: 16px; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 3px; }.category-tabs button.active, .keychain-choice button.selected { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }.category-tabs span, .keychain-choice span { font-size: 22px; }.category-tabs b, .keychain-choice b { font-size: 12px; }.category-tabs small, .keychain-choice small { color: var(--muted); font-size: 9px; }
+.sub-panel { border-top: 1px solid var(--line); padding-top: 20px; }.sub-panel > label, .keychain-options > label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 11px; }.letter-panel { max-height: 365px; overflow: auto; padding-left: 3px; }.field-label { margin-top: 21px; display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; }.field-label span { color: var(--accent-strong); }.character-tabs { display: flex; gap: 6px; margin: 10px 0; }.character-tabs button { border: 1px solid var(--line); background: transparent; color: var(--muted); border-radius: 8px; padding: 6px 10px; font-size: 9px; cursor: pointer; }.character-tabs button.active { color: #111; border-color: var(--accent); background: var(--accent); }.character-grid { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 20px; }.character-grid button { width: 32px; height: 32px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg-deep); font-size: 11px; cursor: pointer; }.character-grid button.selected { background: var(--accent); color: #111; border-color: var(--accent); }
+.special-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; max-height: 355px; overflow: auto; }.special-grid button { min-height: 100px; border: 1px solid var(--line); border-radius: 15px; background: var(--bg-deep); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; }.special-grid button.selected { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }.special-grid span { font-size: 25px; }.special-grid b { font-size: 10px; margin: 7px 0 3px; }.special-grid small { font-size: 8px; color: var(--accent-strong); }
+.keychain-choice { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }.keychain-choice button { min-height: 135px; }.keychain-options { margin-top: 24px; }.select-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 7px; margin-bottom: 20px; }.select-grid button { padding: 11px 8px; border: 1px solid var(--line); background: var(--bg-deep); border-radius: 11px; cursor: pointer; }.select-grid button.selected { border-color: var(--accent); }.select-grid b, .select-grid small { display: block; }.select-grid b { font-size: 9px; }.select-grid small { color: var(--muted); font-size: 8px; margin-top: 4px; }
+.preview-panel { position: sticky; top: 95px; display: grid; gap: 13px; }.preview-card, .summary-card { border-radius: var(--radius); overflow: hidden; }.preview-top { display: flex; justify-content: space-between; padding: 18px 20px 0; font-size: 11px; font-weight: 750; }.preview-top small { color: var(--muted); font-size: 8px; display: flex; align-items: center; gap: 6px; }.preview-top small i { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px rgba(200,241,53,.1); }.preview-colors { border-top: 1px solid var(--line); padding: 13px 20px; display: flex; gap: 17px; color: var(--muted); font-size: 8px; }.preview-colors span { display: flex; gap: 5px; align-items: center; }.preview-colors i { width: 12px; height: 12px; border-radius: 50%; border: 1px solid var(--line); }
+.summary-card { padding: 20px; }.price-line { display: flex; justify-content: space-between; align-items: end; padding-bottom: 17px; border-bottom: 1px solid var(--line); }.price-line > span { font-size: 11px; font-weight: 700; }.price-line small { display: block; color: var(--muted); font-size: 8px; margin-top: 3px; font-weight: 400; }.price-line strong { font-size: 24px; letter-spacing: -1px; }.summary-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 13px; padding: 17px 0; }.summary-grid div { min-width: 0; }.summary-grid span, .summary-grid b { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }.summary-grid span { color: var(--muted); font-size: 8px; }.summary-grid b { font-size: 9px; margin-top: 3px; }.add-cart { width: 100%; border: 0; border-radius: 13px; padding: 14px 16px; display: flex; justify-content: space-between; background: var(--accent); color: #111; font-weight: 800; cursor: pointer; box-shadow: inset 0 -3px rgba(0,0,0,.1); }.add-cart:hover { background: var(--accent-strong); }
+.toast { position: fixed; z-index: 200; left: 25px; bottom: 25px; background: #eefbd0; color: #17200d; border: 1px solid #c8ed6f; border-radius: 16px; padding: 13px 18px; display: flex; gap: 11px; align-items: center; box-shadow: 0 18px 50px rgba(0,0,0,.24); transform: translateY(30px); opacity: 0; pointer-events: none; transition: .3s; }.toast.show { opacity: 1; transform: translateY(0); }.toast > span { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: #bfdc56; font-weight: 900; }.toast b,.toast small { display: block; }.toast b { font-size: 11px; }.toast small { font-size: 9px; opacity: .65; margin-top: 2px; }
+
+.gallery { padding-block: 110px; }.gallery-grid { display: grid; grid-template-columns: repeat(3,1fr); grid-auto-rows: 280px; gap: 13px; }.gallery-card { position: relative; border-radius: 24px; border: 1px solid var(--line); overflow: hidden; background: linear-gradient(145deg,var(--panel-solid),var(--bg-deep)); }.gallery-card.large { grid-row: span 2; }.gallery-card.wide { grid-column: span 2; }.gallery-card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 70% 30%,rgba(255,255,255,.09),transparent 45%); }.gallery-card > span { position: absolute; right: 18px; bottom: 15px; font-size: 8px; letter-spacing: 2px; color: var(--muted); }.gallery-card .product-stage { min-height: 100%; }.gallery-card:hover .clicker-product { transform: rotateX(55deg) rotateZ(-10deg) scale(1.08); }
+.reviews { padding-block: 105px; background: var(--bg-deep); border-block: 1px solid var(--line); }.review-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }.review-grid article { padding: 27px; min-height: 240px; border-radius: 22px; border: 1px solid var(--line); background: var(--panel); display: flex; flex-direction: column; }.review-grid article.featured { transform: translateY(-13px); border-color: rgba(203,241,53,.4); }.stars { color: #e7bd36; letter-spacing: 2px; font-size: 11px; }.review-grid p { font-size: 14px; line-height: 1.9; flex: 1; }.review-person { display: flex; align-items: center; gap: 10px; }.review-person > i { width: 35px; height: 35px; display: grid; place-items: center; border-radius: 50%; background: var(--accent); color: #111; font-style: normal; font-size: 10px; }.review-person b,.review-person small { display: block; }.review-person b { font-size: 10px; }.review-person small { color: var(--muted); font-size: 8px; margin-top: 3px; }
+.faq { padding-block: 110px; display: grid; grid-template-columns: .75fr 1.25fr; gap: 100px; }.faq-intro p { color: var(--muted); font-size: 12px; line-height: 1.8; margin: 20px 0; }.faq-list details { border-bottom: 1px solid var(--line); }.faq-list summary { list-style: none; min-height: 78px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 700; cursor: pointer; }.faq-list summary::-webkit-details-marker { display: none; }.faq-list summary span { color: var(--accent-strong); font-size: 20px; transition: transform .2s; }.faq-list details[open] summary span { transform: rotate(45deg); }.faq-list details p { color: var(--muted); font-size: 12px; line-height: 1.9; margin: -7px 0 24px; max-width: 610px; }
+footer { border-top: 1px solid var(--line); background: var(--bg-deep); }.footer-main { padding-block: 62px; display: grid; grid-template-columns: 2fr repeat(3,1fr); gap: 45px; }.footer-brand p { color: var(--muted); font-size: 11px; line-height: 1.8; margin-top: 19px; }.footer-main > div:not(:first-child) { display: flex; flex-direction: column; gap: 13px; }.footer-main > div > b { font-size: 11px; margin-bottom: 7px; }.footer-main > div > a { color: var(--muted); font-size: 10px; }.footer-main > div > a:hover { color: var(--text); }.footer-bottom { min-height: 64px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line); color: var(--muted); font-size: 9px; }
+
+@media (max-width: 900px) {
+  .section-shell { width: min(100% - 32px, 720px); }
+  .menu-btn { display: grid; }.nav-links { position: absolute; top: 73px; right: 16px; left: 16px; padding: 20px; background: var(--panel-solid); border: 1px solid var(--line); border-radius: 18px; flex-direction: column; gap: 20px; box-shadow: var(--shadow); opacity: 0; pointer-events: none; transform: translateY(-10px); transition: .25s; }.nav-links.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .hero { grid-template-columns: 1fr; padding-top: 120px; text-align: center; min-height: auto; }.hero-copy > p { margin-inline: auto; }.hero-actions,.hero-proof { justify-content: center; }.hero-visual { min-height: 500px; }.hero h1 { letter-spacing: -5px; }.note-one { right: 8%; }.note-two { left: 7%; }
+  .feature-grid { grid-template-columns: repeat(2,1fr); }.config-heading { display: block; }.config-heading > p { text-align: right; margin-top: 12px; }.config-layout { grid-template-columns: 1fr; }.preview-panel { position: relative; top: 0; grid-row: 1; grid-template-columns: 1fr 1fr; }.config-form { grid-row: 2; }.summary-card { align-self: stretch; }.preview-card .product-stage { min-height: 300px; }
+  .gallery-grid { grid-template-columns: repeat(2,1fr); }.gallery-card.large { grid-row: span 1; }.gallery-card.wide { grid-column: span 1; }.review-grid { grid-template-columns: 1fr; }.review-grid article.featured { transform: none; }.faq { grid-template-columns: 1fr; gap: 35px; }.footer-main { grid-template-columns: 2fr 1fr 1fr; }.footer-main > div:last-child { grid-column: 2; }
+}
+
+@media (max-width: 600px) {
+  .section-shell { width: min(100% - 24px, 520px); }.navbar { height: 64px; }.nav-links { top: 63px; }.logo > i { width: 35px; height: 35px; }.logo > span { font-size: 17px; }.hero { padding-top: 105px; }.hero h1 { font-size: 58px; letter-spacing: -4px; }.hero-copy > p { font-size: 14px; }.hero-actions { flex-direction: column; }.hero-btn { width: 100%; }.hero-proof { margin-top: 26px; }.hero-visual { min-height: 420px; transform: scale(.9); margin-inline: -20px; }.orbit-one { width: 410px; }.orbit-two { width: 450px; }.floating-note { display: none; }.trust-strip > div { grid-template-columns: repeat(2,1fr); padding-block: 10px; }.trust-strip span { min-height: 50px; border-bottom: 1px solid var(--line); font-size: 10px; }.trust-strip span:nth-child(2) { border-left: 0; }.trust-strip span:nth-child(3),.trust-strip span:nth-child(4) { border-bottom: 0; }.features,.gallery,.faq { padding-block: 78px; }.feature-grid { grid-template-columns: 1fr; }.feature-grid article { min-height: 190px; }.section-heading h2,.faq h2 { font-size: 37px; }.section-heading.row { display: block; }.section-heading.row > p { text-align: right; margin-top: 15px; }.config-section { padding-block: 55px 80px; }.preview-panel { grid-template-columns: 1fr; }.preview-card .product-stage { min-height: 280px; }.summary-card { display: none; }.config-form { min-height: 680px; border-radius: 22px; }.stepper { padding: 0 7px; }.stepper button { min-height: 71px; }.stepper button span { display: none; }.step-content { padding: 25px 17px 15px; }.step-actions { padding: 14px 17px; }.number-grid button { height: 92px; }.color-grid { grid-template-columns: repeat(4,1fr); }.color-grid.compact { grid-template-columns: repeat(6,1fr); }.switch-list button { grid-template-columns: 49px 1fr auto; gap: 9px; }.switch-copy em { display: none; }.category-tabs button { min-height: 90px; }.special-grid { grid-template-columns: repeat(3,1fr); }.select-grid { grid-template-columns: 1fr; }.gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 245px; }.review-grid article { min-height: 210px; }.faq-list summary { font-size: 12px; }.footer-main { grid-template-columns: 1fr 1fr; }.footer-brand { grid-column: span 2; }.footer-main > div:last-child { grid-column: auto; }.footer-bottom { flex-direction: column; justify-content: center; gap: 8px; }.toast { left: 12px; right: 12px; bottom: 12px; }.product-stage { min-height: 300px; }
+}
+
+@media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration: .001ms !important; scroll-behavior: auto !important; transition-duration: .001ms !important; } }
+</style>
+</head>
+<body>
+<header class="nav-wrap"><nav class="navbar section-shell">
+  <a href="#top" class="logo"><i>ن</i><span>نَقْرة<small>CLICKERS</small></span></a>
+  <div class="nav-links" id="navLinks"><a href="#features">المميزات</a><a href="#gallery">التصاميم</a><a href="#reviews">الآراء</a><a href="#faq">الأسئلة</a></div>
+  <div class="nav-actions"><button class="icon-btn" id="themeBtn" aria-label="تغيير المظهر">☼</button><button class="cart-btn" aria-label="السلة"><span>⌑</span><i id="cartCount">0</i></button><button class="menu-btn" id="menuBtn" aria-label="القائمة">☰</button></div>
+</nav></header>
+
+<main>
+<section class="hero section-shell" id="top">
+  <div class="hero-copy"><div class="hero-badge"><i></i> صُمم وجُمّع في العراق</div><h1>نقرتك.<br><span>بصوتك.</span></h1><p>حوّل سويتشات الكيبورد المفضلة لديك إلى قطعة شخصية، مصنوعة للاسترخاء، التركيز، وإرضاء حبك للنقر.</p><div class="hero-actions"><button class="btn-primary hero-btn" data-scroll="configurator">ابدأ التصميم <span>←</span></button><a href="#gallery" class="text-link"><i>▶</i> شاهد التصاميم</a></div><div class="hero-proof"><div class="avatars"><span>م</span><span>ع</span><span>س</span><span>+</span></div><div><b>+١٢٠٠ عميل سعيد</b><span>★★★★★ <small>4.9</small></span></div></div></div>
+  <div class="hero-visual"><div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div><div id="heroPreview"></div><div class="floating-note note-one"><i style="background:#3c73d9"></i><span><small>السويتش</small><b>Cherry MX Blue</b></span></div><div class="floating-note note-two"><span>⌁</span><div><small>مصنوع لك</small><b>١٠٠٪ قابل للتخصيص</b></div></div></div>
+</section>
+
+<div class="trust-strip"><div class="section-shell"><span><i>◇</i> تبديل بدون لحام</span><span><i>↯</i> تجهيز خلال ٢–٤ أيام</span><span><i>♧</i> مواد عالية الجودة</span><span><i>◎</i> توصيل لكل العراق</span></div></div>
+
+<section id="features" class="features section-shell"><div class="section-heading centered"><span class="eyebrow">تفاصيل صغيرة. فرق كبير.</span><h2>صُنع ليُلمس، لا ليُشاهد فقط.</h2><p>كل جزء مختار ليعطيك إحساسًا مُرضيًا في كل ضغطة.</p></div><div class="feature-grid">
+  <article><i>⌁</i><h3>Hot-swappable</h3><p>بدّل السويتش في ثوانٍ، بلا لحام وبلا أدوات.</p><span>↙</span></article>
+  <article class="featured"><i>◈</i><h3>جودة تحسّها</h3><p>قاعدة ثابتة وتشطيب ناعم يقاوم الاستخدام اليومي.</p><span>↙</span></article>
+  <article><i>✣</i><h3>تصميم بلا حدود</h3><p>ألوان، حروف، رموز وكيكابات خاصة تعبر عنك.</p><span>↙</span></article>
+  <article><i>◌</i><h3>رفيق يومك</h3><p>خفيف للجيب، جميل على المكتب، ومُرضٍ للأعصاب.</p><span>↙</span></article>
+</div></section>
+
+<section id="configurator" class="config-section section-shell">
+  <div class="section-heading config-heading"><div><span class="eyebrow">صمّمه بطريقتك</span><h2>كل نقرة، على مزاجك.</h2></div><p>خمسة اختيارات بسيطة تفصلك عن كليكر مصنوع لك.</p></div>
+  <div class="config-layout">
+    <div class="config-form glass-card"><div class="stepper" id="stepper"></div><div class="step-content" id="stepContent"></div><div class="step-actions"><button class="btn-ghost" id="prevStep">السابق</button><button class="btn-primary" id="nextStep">التالي <span>←</span></button></div></div>
+    <aside class="preview-panel"><div class="preview-card glass-card"><div class="preview-top"><span>معاينة مباشرة</span><small><i></i> يتم التحديث الآن</small></div><div id="livePreview"></div><div class="preview-colors" id="previewColors"></div></div><div class="summary-card glass-card"><div class="price-line"><span>السعر النهائي<small>يشمل جميع اختياراتك</small></span><strong id="totalPrice"></strong></div><div class="summary-grid" id="summary"></div><button class="add-cart" id="addCart">إضافة إلى السلة <span id="cartPrice"></span></button></div></aside>
+  </div>
+  <div class="toast" id="toast"><span>✓</span><div><b>تمت الإضافة إلى السلة</b><small>حُفظ تصميمك بنجاح</small></div></div>
+</section>
+
+<section id="gallery" class="gallery section-shell"><div class="section-heading row"><div><span class="eyebrow">إلهامك القادم</span><h2>تصاميم من مجتمع نَقْرة.</h2></div><p>كل قطعة تبدأ من نفس الفكرة،<br>وتنتهي بشخصية مختلفة.</p></div><div class="gallery-grid" id="galleryGrid"></div></section>
+
+<section id="reviews" class="reviews"><div class="section-shell"><div class="section-heading centered"><span class="eyebrow">قالوا عن النَّقرة</span><h2>حب من أول ضغطة.</h2></div><div class="review-grid">
+  <article><div class="stars">★★★★★</div><p>“التغليف والتفاصيل أحلى مما توقعت. صوت الـ Blue بالضبط مثل ما أريده، وصار معي طول الوقت.”</p><div class="review-person"><i>م ف</i><span><b>مصطفى فاضل</b><small>بغداد · مشتري موثّق</small></span></div></article>
+  <article class="featured"><div class="stars">★★★★★</div><p>“صممت واحد وردي بحرفي. الموقع سهل والنتيجة وصلت مطابقة تمامًا للتصميم.”</p><div class="review-person"><i>ز ع</i><span><b>زينب علي</b><small>أربيل · مشتري موثّق</small></span></div></article>
+  <article><div class="stars">★★★★★</div><p>“أخيرًا شيء بسيط لكن فعلاً ممتع. أبدّل السويتش حسب مزاجي والتجميع نظيف جدًا.”</p><div class="review-person"><i>ح ك</i><span><b>حسن كريم</b><small>البصرة · مشتري موثّق</small></span></div></article>
+</div></div></section>
+
+<section id="faq" class="faq section-shell"><div class="faq-intro"><span class="eyebrow">عندك سؤال؟</span><h2>الأجوبة،<br>قبل أن تسأل.</h2><p>ما لقيت جوابك؟ راسلنا وسنجيبك بأسرع وقت.</p><button class="btn-ghost">تواصل معنا ←</button></div><div class="faq-list">
+  <details open><summary>هل يمكنني اختيار تصميم مختلف لكل زر؟<span>＋</span></summary><p>النسخة الحالية تطبّق التصميم على جميع الأزرار للحفاظ على شكل متناسق. دعم التصميم المنفصل لكل زر جاهز للإضافة لاحقًا.</p></details>
+  <details><summary>هل السويتشات أصلية؟<span>＋</span></summary><p>نعم، تختار نوع السويتش بالاسم قبل الطلب، ويظهر فرق السعر مباشرة في الحاسبة.</p></details>
+  <details><summary>كم يستغرق تجهيز الطلب؟<span>＋</span></summary><p>عادةً من 2 إلى 4 أيام عمل للتجميع والفحص، ثم يُسلّم لشركة الشحن.</p></details>
+  <details><summary>هل يمكن تغيير السويتشات لاحقًا؟<span>＋</span></summary><p>نعم. قاعدة الكليكر مصممة لتتيح تبديل السويتش بدون لحام.</p></details>
+</div></section>
+</main>
+
+<footer><div class="section-shell footer-main"><div class="footer-brand"><a class="logo"><i>ن</i><span>نَقْرة<small>CLICKERS</small></span></a><p>نحوّل صوتك المفضل إلى شيء<br>تقدر تمسكه بيدك.</p></div><div><b>استكشف</b><a href="#configurator">صمم كليكرك</a><a href="#gallery">التصاميم</a><a href="#features">عن نَقْرة</a></div><div><b>المساعدة</b><a href="#faq">الأسئلة الشائعة</a><a href="#">الشحن والتوصيل</a><a href="#">سياسة الاستبدال</a></div><div><b>تابعنا</b><a href="#">Instagram ↗</a><a href="#">TikTok ↗</a><a href="#">X / Twitter ↗</a></div></div><div class="section-shell footer-bottom"><span>© ٢٠٢٦ نَقْرة. كل الحقوق محفوظة.</span><span>صُنع بحب في العراق 🇮🇶</span></div></footer>
+<script>// Product catalogue: these arrays are the single source of truth and can be
+// replaced by API/database responses later without changing the UI renderer.
+const PRICES = { base: 7000, letterPrinting: 1500, keychain: 3000 };
+const colors = [
+  { id:"black", name:"أسود", value:"#15171a" }, { id:"white", name:"أبيض", value:"#ece9e1" },
+  { id:"gray", name:"رمادي", value:"#72777e" }, { id:"red", name:"أحمر", value:"#d6483f" },
+  { id:"blue", name:"أزرق", value:"#3468d4" }, { id:"green", name:"أخضر", value:"#3b8263" },
+  { id:"yellow", name:"أصفر", value:"#e7bd3a" }, { id:"orange", name:"برتقالي", value:"#df762f" },
+  { id:"purple", name:"بنفسجي", value:"#7958a6" }, { id:"pink", name:"وردي", value:"#e58fa8" },
+  { id:"clear", name:"شفاف", value:"rgba(218,229,230,.42)", transparent:true }
+];
+const switchTypes = [
+  { id:"cherry-blue", name:"Cherry MX Blue", family:"Cherry MX", price:1800, description:"نقرة واضحة وصوت كلاسيكي مُرضٍ.", accent:"#3c73d9", image:"/products/switches/cherry-blue.webp" },
+  { id:"cherry-brown", name:"Cherry MX Brown", family:"Cherry MX", price:1800, description:"إحساس لمسي هادئ ومتوازن.", accent:"#8c5638", image:"/products/switches/cherry-brown.webp" },
+  { id:"cherry-red", name:"Cherry MX Red", family:"Cherry MX", price:1750, description:"حركة خطية ناعمة وخفيفة.", accent:"#d84943", image:"/products/switches/cherry-red.webp" },
+  { id:"gateron-blue", name:"Gateron Blue", family:"Gateron", price:1500, description:"نقرة مرحة بضغط خفيف.", accent:"#5b8de0", image:"/products/switches/gateron-blue.webp" },
+  { id:"gateron-brown", name:"Gateron Brown", family:"Gateron", price:1500, description:"لمسة ناعمة للاستخدام اليومي.", accent:"#a56b4e", image:"/products/switches/gateron-brown.webp" },
+  { id:"gateron-red", name:"Gateron Red", family:"Gateron", price:1450, description:"سريع وانسيابي بدون نتوء.", accent:"#ed615a", image:"/products/switches/gateron-red.webp" },
+  { id:"kailh-white", name:"Kailh Box White", family:"Kailh Box", price:2000, description:"نقرة حادة مع مقاومة للغبار.", accent:"#e9e6dc", image:"/products/switches/kailh-white.webp" }
+];
+const specialKeycaps = [
+  { id:"oreo", name:"أوريو", symbol:"◉", price:3000, image:"/products/keycaps/oreo.webp" },
+  { id:"cake", name:"كيك", symbol:"♜", price:3500, image:"/products/keycaps/cake.webp" },
+  { id:"cookie", name:"كوكي", symbol:"✣", price:3000, image:"/products/keycaps/cookie.webp" },
+  { id:"donut", name:"دونات", symbol:"◎", price:3500, image:"/products/keycaps/donut.webp" },
+  { id:"paw", name:"كف قطة", symbol:"♣", price:4000, image:"/products/keycaps/cat-paw.webp" },
+  { id:"controller", name:"يد تحكم", symbol:"✣", price:4000, image:"/products/keycaps/controller.webp" },
+  { id:"heart", name:"قلب", symbol:"♥", price:2500, image:"/products/keycaps/heart.webp" },
+  { id:"skull", name:"جمجمة", symbol:"☠", price:4000, image:"/products/keycaps/skull.webp" },
+  { id:"star", name:"نجمة", symbol:"★", price:2500, image:"/products/keycaps/star.webp" },
+  { id:"cloud", name:"غيمة", symbol:"☁", price:2500, image:"/products/keycaps/cloud.webp" },
+  { id:"smile", name:"ابتسامة", symbol:"☺", price:2500, image:"/products/keycaps/smile.webp" }
+];
+const chars = { english:[..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"], numbers:[..."0123456789"], arabic:[..."ابتثجحخدذرزسشصضطظعغفقكلمنهوي"], symbols:["!","?","#","@","&","+","−","♥","★","☻"] };
+const keychainTypes = [{id:"ring",name:"حلقة كلاسيكية",price:0},{id:"carabiner",name:"مشبك معدني",price:1000},{id:"strap",name:"حبل معصم",price:1500}];
+const chainColors = [{id:"silver",name:"فضي",value:"#bfc3c7"},{id:"black",name:"أسود",value:"#242528"},{id:"gold",name:"ذهبي",value:"#d8ab54"},{id:"blue",name:"أزرق",value:"#4d7dcf"},{id:"pink",name:"وردي",value:"#dc8faa"}];
+const steps = ["العدد","لون القاعدة","السويتش","الكيكاب","الميدالية"];
+const state = { step:0, count:3, baseColor:"black", switchType:"cherry-blue", category:"plain", keycapColor:"white", character:"A", charGroup:"english", textColor:"black", special:"oreo", keychain:false, chainType:"ring", chainColor:"silver" };
+
+const $ = (selector) => document.querySelector(selector);
+const find = (list,id) => list.find(item => item.id === id);
+const money = value => new Intl.NumberFormat("ar-IQ").format(value) + " د.ع";
+const price = () => {
+  const sw = find(switchTypes,state.switchType), special = find(specialKeycaps,state.special), chain = find(keychainTypes,state.chainType);
+  return PRICES.base + state.count * sw.price + (state.category === "special" ? special.price : 0) + (state.category === "letter" ? PRICES.letterPrinting : 0) + (state.keychain ? PRICES.keychain + chain.price : 0);
+};
+
+function previewHTML(options = {}) {
+  const s = { ...state, ...options }, base = find(colors,s.baseColor), cap = find(colors,s.keycapColor), sw = find(switchTypes,s.switchType), chain = find(chainColors,s.chainColor) || chainColors[0], special = find(specialKeycaps,s.special);
+  const keys = Array.from({length:s.count},(_,i) => `<div class="switch-stack" style="animation-delay:${i*45}ms"><div class="switch-body"><i></i></div><div class="keycap keycap-${s.category}">${s.category === "letter" ? `<b>${s.character}</b>` : s.category === "special" ? `<b>${special.symbol}</b>` : ""}</div></div>`).join("");
+  return `<div class="product-stage ${options.compact ? "compact" : ""}" style="--base:${base.value};--keycap:${cap.value};--key-text:${find(colors,s.textColor)?.value || "#111"};--switch:${sw.accent};--chain:${chain.value}"><div class="stage-glow"></div><div class="clicker-product count-${s.count} ${base.transparent ? "is-clear" : ""}">${s.keychain ? `<div class="keychain"><span></span><i></i></div>` : ""}<div class="base-shell"><div class="base-inset">${keys}</div><div class="brand-mark">نَقْرة</div></div></div>${options.compact ? "" : `<div class="drag-hint"><span>↻</span> اسحب للتدوير</div>`}</div>`;
+}
+
+function stepHeader(number,title,subtitle) { return `<header class="step-header"><span>${number}</span><div><h3>${title}</h3><p>${subtitle}</p></div></header>`; }
+function colorGrid(list,selected,action,compact=false) { return `<div class="color-grid ${compact ? "compact" : ""}">${list.map(c => `<button data-action="${action}" data-value="${c.id}" class="${selected===c.id?"selected":""}" title="${c.name}"><i class="${c.transparent?"transparent":""}" style="background:${c.value}"></i><span>${c.name}</span></button>`).join("")}</div>`; }
+
+function renderStep() {
+  let html = "";
+  if (state.step === 0) html = stepHeader("01","كم سويتش تريد؟","اختر الحجم المناسب لجيبك أو مكتبك.") + `<div class="number-grid">${Array.from({length:9},(_,i)=>i+1).map(n=>`<button data-action="count" data-value="${n}" class="${state.count===n?"selected":""}"><b>${n}</b><span>${n===1?"سويتش":"سويتشات"}</span></button>`).join("")}</div>`;
+  if (state.step === 1) html = stepHeader("02","اختر لون القاعدة","لون صلب أم شفاف؟ القرار لك.") + colorGrid(colors,state.baseColor,"baseColor");
+  if (state.step === 2) html = stepHeader("03","اختر إحساس النقرة","لكل سويتش صوت وشخصية مختلفة.") + `<div class="switch-list">${switchTypes.map(item=>`<button data-action="switchType" data-value="${item.id}" class="${state.switchType===item.id?"selected":""}"><span class="switch-thumb" style="--accent:${item.accent}"><i></i></span><span class="switch-copy"><small>${item.family}</small><b>${item.name}</b><em>${item.description}</em></span><strong>+${money(item.price)}<small>لكل سويتش</small></strong></button>`).join("")}</div>`;
+  if (state.step === 3) {
+    html = stepHeader("04","اختر تصميم الكيكاب","بسيط، مطبوع، أو قطعة صغيرة تلفت النظر.") + `<div class="category-tabs"><button data-action="category" data-value="plain" class="${state.category==="plain"?"active":""}"><span>●</span><b>سادة</b><small>ألوان نقية</small></button><button data-action="category" data-value="letter" class="${state.category==="letter"?"active":""}"><span>A</span><b>حروف</b><small>اطبع ما تحب</small></button><button data-action="category" data-value="special" class="${state.category==="special"?"active":""}"><span>★</span><b>مميز</b><small>تصاميم خاصة</small></button></div>`;
+    if (state.category === "plain") html += `<div class="sub-panel"><label>لون الكيكاب</label>${colorGrid(colors,state.keycapColor,"keycapColor")}</div>`;
+    if (state.category === "letter") html += `<div class="sub-panel letter-panel"><label>لون الكيكاب</label>${colorGrid(colors,state.keycapColor,"keycapColor",true)}<div class="field-label"><label>الحرف المطبوع</label><span>+${money(PRICES.letterPrinting)}</span></div><div class="character-tabs">${Object.keys(chars).map(g=>`<button data-action="charGroup" data-value="${g}" class="${state.charGroup===g?"active":""}">${({english:"English",numbers:"123",arabic:"عربي",symbols:"رموز"})[g]}</button>`).join("")}</div><div class="character-grid">${chars[state.charGroup].map(c=>`<button data-action="character" data-value="${c}" class="${state.character===c?"selected":""}">${c}</button>`).join("")}</div><label>لون الطباعة</label>${colorGrid(colors.filter(c=>!c.transparent),state.textColor,"textColor",true)}</div>`;
+    if (state.category === "special") html += `<div class="special-grid">${specialKeycaps.map(item=>`<button data-action="special" data-value="${item.id}" class="${state.special===item.id?"selected":""}"><span>${item.symbol}</span><b>${item.name}</b><small>+${money(item.price)}</small></button>`).join("")}</div>`;
+  }
+  if (state.step === 4) {
+    html = stepHeader("05","أضف ميدالية","خذه معك، أو اتركه قطعة هادئة على المكتب.") + `<div class="keychain-choice"><button data-action="keychain" data-value="false" class="${!state.keychain?"selected":""}"><span>−</span><b>بدون ميدالية</b><small>للاستخدام المكتبي</small></button><button data-action="keychain" data-value="true" class="${state.keychain?"selected":""}"><span>⌁</span><b>مع ميدالية</b><small>+${money(PRICES.keychain)}</small></button></div>`;
+    if (state.keychain) html += `<div class="sub-panel keychain-options"><label>نوع الميدالية</label><div class="select-grid">${keychainTypes.map(t=>`<button data-action="chainType" data-value="${t.id}" class="${state.chainType===t.id?"selected":""}"><b>${t.name}</b><small>${t.price?`+${money(t.price)}`:"مشمول"}</small></button>`).join("")}</div><label>لون المعدن</label>${colorGrid(chainColors,state.chainColor,"chainColor",true)}</div>`;
+  }
+  $("#stepContent").innerHTML = html;
+}
+
+function renderAll() {
+  $("#stepper").innerHTML = steps.map((label,i)=>`<button data-step="${i}" class="${state.step===i?"active":state.step>i?"done":""}"><i>${state.step>i?"✓":i+1}</i><span>${label}</span></button>`).join("");
+  renderStep();
+  $("#livePreview").innerHTML = previewHTML();
+  const base=find(colors,state.baseColor), cap=find(colors,state.keycapColor), sw=find(switchTypes,state.switchType), special=find(specialKeycaps,state.special), chain=find(keychainTypes,state.chainType), total=price();
+  $("#previewColors").innerHTML = `<span>القاعدة <i style="background:${base.value}"></i></span><span>الكيكاب <i style="background:${cap.value}"></i></span><span>السويتش <i style="background:${sw.accent}"></i></span>`;
+  $("#totalPrice").textContent = money(total); $("#cartPrice").textContent = money(total);
+  const entries = [["العدد",`${state.count} سويتش`],["القاعدة",base.name],["السويتش",sw.name],["الكيكاب",state.category==="special"?special.name:state.category==="letter"?`حرف ${state.character}`:"سادة"],["اللون",cap.name],["الميدالية",state.keychain?chain.name:"بدون"]];
+  $("#summary").innerHTML = entries.map(([label,value])=>`<div><span>${label}</span><b>${value}</b></div>`).join("");
+  $("#prevStep").disabled = state.step===0;
+  $("#nextStep").innerHTML = state.step===4 ? `إضافة إلى السلة <span>＋</span>` : `التالي <span>←</span>`;
+}
+
+function addToCart() {
+  const sw=find(switchTypes,state.switchType), base=find(colors,state.baseColor), cap=find(colors,state.keycapColor), special=find(specialKeycaps,state.special), chain=find(keychainTypes,state.chainType);
+  const configuration = { switches:state.count, baseColor:base.id, switchType:sw.name, keycap:state.category==="special"?special.name:state.category==="letter"?`Letter ${state.character}`:cap.name, keycapColor:cap.id, letter:state.category==="letter"?state.character:null, textColor:state.category==="letter"?state.textColor:null, keychain:state.keychain, keychainType:state.keychain?chain.name:null, price:price() };
+  const cart = JSON.parse(localStorage.getItem("naqra-cart") || "[]"); cart.push(configuration); localStorage.setItem("naqra-cart",JSON.stringify(cart)); $("#cartCount").textContent=cart.length; $("#toast").classList.add("show"); setTimeout(()=>$("#toast").classList.remove("show"),2600);
+}
+
+$("#stepContent").addEventListener("click", event => {
+  const button=event.target.closest("button[data-action]"); if(!button) return; const action=button.dataset.action, value=button.dataset.value;
+  if(action==="count") state.count=Number(value); else if(action==="keychain") state.keychain=value==="true"; else if(action==="charGroup") { state.charGroup=value; state.character=chars[value][0]; } else state[action]=value;
+  renderAll();
+});
+$("#stepper").addEventListener("click",e=>{const b=e.target.closest("button[data-step]");if(b){state.step=Number(b.dataset.step);renderAll();}});
+$("#prevStep").addEventListener("click",()=>{state.step=Math.max(0,state.step-1);renderAll();});
+$("#nextStep").addEventListener("click",()=>{if(state.step<4){state.step++;renderAll();}else addToCart();});
+$("#addCart").addEventListener("click",addToCart);
+$("#themeBtn").addEventListener("click",()=>{const dark=document.documentElement.dataset.theme==="dark";document.documentElement.dataset.theme=dark?"light":"dark";$("#themeBtn").textContent=dark?"◐":"☼";localStorage.setItem("naqra-theme",dark?"light":"dark");});
+$("#menuBtn").addEventListener("click",()=>$("#navLinks").classList.toggle("open"));
+document.querySelectorAll(".nav-links a").forEach(a=>a.addEventListener("click",()=>$("#navLinks").classList.remove("open")));
+document.querySelectorAll("[data-scroll]").forEach(b=>b.addEventListener("click",()=>document.getElementById(b.dataset.scroll)?.scrollIntoView({behavior:"smooth"})));
+
+const savedTheme=localStorage.getItem("naqra-theme"); if(savedTheme){document.documentElement.dataset.theme=savedTheme;$("#themeBtn").textContent=savedTheme==="dark"?"☼":"◐";}
+$("#cartCount").textContent=JSON.parse(localStorage.getItem("naqra-cart")||"[]").length;
+$("#heroPreview").innerHTML=previewHTML({count:4,category:"letter",character:"ن",keychain:true});
+const gallery=[{c:"large",base:"white",cap:"black",count:4,label:"MONO / 04"},{c:"",base:"pink",cap:"white",count:3,label:"SAKURA / 03"},{c:"",base:"blue",cap:"yellow",count:6,label:"RETRO / 06"},{c:"",base:"black",cap:"red",count:2,label:"EMBER / 02"},{c:"wide",base:"clear",cap:"white",count:5,label:"FROST / 05"}];
+$("#galleryGrid").innerHTML=gallery.map(g=>`<article class="gallery-card ${g.c}">${previewHTML({baseColor:g.base,keycapColor:g.cap,count:g.count,compact:true})}<span>${g.label}</span></article>`).join("");
+renderAll();
+</script>
+</body></html>
