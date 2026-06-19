@@ -2,37 +2,37 @@
 <html lang="ar" dir="rtl" data-theme="dark">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="صمّم كليكر سويتشات ميكانيكية خاص بك"><meta name="theme-color" content="#0d0f0e">
-  <title>نَقْرة | صمّم كليكرك</title><link rel="icon" href="./favicon.svg">
+  <meta name="description" content="صمّم كليكر سويتشات ميكانيكية خاص بك من RavenLab"><meta name="theme-color" content="#080a08">
+  <title>RavenLab | Custom Switch Clickers</title><link rel="icon" href="./favicon.svg">
   <style>
 
 :root {
-  --bg: #f2f2ed;
-  --bg-deep: #e8e9e3;
+  --bg: #ffffff;
+  --bg-deep: #f2f3ef;
   --panel: rgba(255,255,255,.72);
   --panel-solid: #fafaf7;
   --text: #171918;
   --muted: #6d706c;
   --line: rgba(20,23,20,.1);
-  --accent: #c8f135;
-  --accent-strong: #b8df25;
+  --accent: #9cc03d;
+  --accent-strong: #7fa326;
   --shadow: 0 24px 80px rgba(32,35,30,.11);
   --radius: 28px;
-  --nav: rgba(242,242,237,.8);
+  --nav: rgba(255,255,255,.82);
 }
 
 [data-theme="dark"] {
-  --bg: #0d0f0e;
-  --bg-deep: #131614;
+  --bg: #080a08;
+  --bg-deep: #101310;
   --panel: rgba(28,31,29,.72);
   --panel-solid: #171a18;
   --text: #f3f4ed;
   --muted: #9da19b;
   --line: rgba(255,255,255,.1);
-  --accent: #d7ff45;
-  --accent-strong: #bce524;
+  --accent: #9cc03d;
+  --accent-strong: #b4d85a;
   --shadow: 0 28px 90px rgba(0,0,0,.32);
-  --nav: rgba(13,15,14,.78);
+  --nav: rgba(8,10,8,.82);
 }
 
 * { box-sizing: border-box; }
@@ -109,8 +109,8 @@ a { color: inherit; text-decoration: none; }
 /* Product model */
 .product-stage { position: relative; width: 100%; min-height: 340px; display: grid; place-items: center; perspective: 1100px; isolation: isolate; }
 .product-stage .stage-glow { position: absolute; width: 68%; height: 38%; bottom: 20%; border-radius: 50%; background: color-mix(in srgb, var(--switch) 20%, transparent); filter: blur(35px); }
-.clicker-product { position: relative; z-index: 2; transform: rotateX(60deg) rotateZ(-19deg) translateY(-8px); transform-style: preserve-3d; transition: transform .5s ease; filter: drop-shadow(24px 35px 22px rgba(0,0,0,.24)); }
-.product-stage:hover .clicker-product { transform: rotateX(55deg) rotateZ(-13deg) translateY(-14px) scale(1.02); }
+.clicker-product { position: relative; z-index: 2; transform: rotateX(var(--rx,60deg)) rotateZ(var(--rz,-19deg)) translateY(-8px) scale(var(--zoom,1)); transform-style: preserve-3d; transition: transform .12s ease-out; filter: drop-shadow(24px 35px 22px rgba(0,0,0,.24)); }
+.product-stage.interactive-3d { cursor: grab; touch-action: none; user-select: none; }.product-stage.interactive-3d.dragging { cursor: grabbing; }.product-stage.interactive-3d.dragging .clicker-product { transition: none; }
 .base-shell { min-width: 178px; min-height: 134px; padding: 17px 17px 26px; background: var(--base); border-radius: 23px; border: 1px solid rgba(255,255,255,.24); box-shadow: inset 0 -10px 15px rgba(0,0,0,.21), inset 0 4px 5px rgba(255,255,255,.18), 0 9px 0 color-mix(in srgb, var(--base) 62%, #050505); position: relative; transform-style: preserve-3d; transition: background .35s, min-width .35s; }
 .is-clear .base-shell { backdrop-filter: blur(10px); border-color: rgba(220,240,242,.5); }
 .base-inset { display: grid; grid-template-columns: repeat(3, 54px); gap: 9px; padding: 8px; border-radius: 13px; background: rgba(0,0,0,.12); box-shadow: inset 0 2px 5px rgba(0,0,0,.28); }
@@ -119,9 +119,11 @@ a { color: inherit; text-decoration: none; }
 @keyframes popIn { from { opacity: 0; transform: translateZ(35px) scale(.72); } }
 .switch-body { position: absolute; inset: 5px; border-radius: 6px; background: var(--switch); box-shadow: 0 5px 0 color-mix(in srgb, var(--switch) 60%, #111), inset 0 2px rgba(255,255,255,.25); }.switch-body i { position: absolute; width: 17px; height: 17px; border-radius: 4px; background: color-mix(in srgb, var(--switch) 70%, white); left: 50%; top: 50%; transform: translate(-50%,-50%); }
 .keycap { position: absolute; inset: -1px; z-index: 2; display: grid; place-items: center; border-radius: 9px; background: var(--keycap); color: var(--key-text); border: 1px solid rgba(255,255,255,.25); box-shadow: inset 0 -8px 9px rgba(0,0,0,.16), inset 0 4px 3px rgba(255,255,255,.25), 0 8px 0 color-mix(in srgb, var(--keycap) 65%, #111); transform: translateZ(17px); transition: background .3s, color .3s; }.keycap b { font-size: 20px; text-shadow: 0 1px rgba(255,255,255,.2); transform: rotateZ(19deg); }.keycap-special b { font-size: 23px; }
-.brand-mark { position: absolute; bottom: 8px; left: 14px; font-size: 7px; font-weight: 900; color: rgba(255,255,255,.48); letter-spacing: 1px; }
+.brand-mark { position: absolute; bottom: 8px; left: 14px; font-size: 6px; font-weight: 900; color: rgba(255,255,255,.55); letter-spacing: .8px; direction: ltr; }
 .keychain { position: absolute; top: 38px; right: -58px; width: 70px; height: 45px; border: 7px solid var(--chain); border-radius: 50%; box-shadow: inset 2px 2px rgba(255,255,255,.45), 2px 4px 6px rgba(0,0,0,.28); }.keychain span { position: absolute; width: 30px; height: 10px; background: var(--chain); left: -20px; top: 10px; border-radius: 4px; }.keychain i { position: absolute; width: 12px; height: 12px; border: 3px solid var(--chain); left: -28px; top: 9px; border-radius: 50%; }
-.drag-hint { position: absolute; bottom: 11px; color: var(--muted); font-size: 10px; display: flex; align-items: center; gap: 7px; }.drag-hint span { font-size: 16px; }
+.drag-hint { position: absolute; bottom: 11px; color: var(--muted); font-size: 10px; display: flex; align-items: center; gap: 7px; pointer-events:none; }.drag-hint span { font-size: 16px; }
+.live-3d-badge { display:inline-grid; place-items:center; min-width:28px; height:20px; margin-left:6px; border-radius:6px; background:var(--accent); color:#0b0d09; font-size:8px; letter-spacing:.5px; }
+.key-selector-wrap { margin-bottom:18px; padding:14px; border:1px solid var(--line); border-radius:16px; background:var(--bg-deep); }.key-selector-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }.key-selector-head div { display:flex; flex-direction:column; gap:3px; }.key-selector-head b { font-size:11px; }.key-selector-head small { color:var(--muted); font-size:8px; }.key-selector-head button { border:0; border-radius:8px; padding:7px 10px; background:var(--panel-solid); color:var(--text); font-size:8px; cursor:pointer; }.key-selector { display:flex; flex-wrap:wrap; gap:7px; direction:ltr; }.key-selector button { width:40px; height:40px; border:1px solid var(--line); border-radius:10px; background:var(--panel-solid); cursor:pointer; font-weight:800; position:relative; }.key-selector button.selected { color:#0b0d09; background:var(--accent); border-color:var(--accent); }.key-selector button.selected::after { content:"✓"; position:absolute; right:-3px; top:-4px; width:14px; height:14px; display:grid; place-items:center; border-radius:50%; background:#111; color:#fff; font-size:7px; }.multi-key-note { display:flex; align-items:center; gap:7px; margin:0 0 12px; color:var(--muted); font-size:9px; }.multi-key-note i { width:6px; height:6px; border-radius:50%; background:var(--accent); }
 .product-stage.compact { min-height: 100%; transform: scale(.75); }.product-stage.compact .clicker-product { filter: drop-shadow(17px 25px 15px rgba(0,0,0,.24)); }
 
 /* Configurator */
@@ -165,14 +167,14 @@ footer { border-top: 1px solid var(--line); background: var(--bg-deep); }.footer
 </head>
 <body>
 <header class="nav-wrap"><nav class="navbar section-shell">
-  <a href="#top" class="logo"><i>ن</i><span>نَقْرة<small>CLICKERS</small></span></a>
+  <a href="#top" class="logo"><i>R</i><span>RavenLab<small>CUSTOM CLICKERS</small></span></a>
   <div class="nav-links" id="navLinks"><a href="#features">المميزات</a><a href="#gallery">التصاميم</a><a href="#reviews">الآراء</a><a href="#faq">الأسئلة</a></div>
   <div class="nav-actions"><button class="icon-btn" id="themeBtn" aria-label="تغيير المظهر">☼</button><button class="cart-btn" aria-label="السلة"><span>⌑</span><i id="cartCount">0</i></button><button class="menu-btn" id="menuBtn" aria-label="القائمة">☰</button></div>
 </nav></header>
 
 <main>
 <section class="hero section-shell" id="top">
-  <div class="hero-copy"><div class="hero-badge"><i></i> صُمم وجُمّع في العراق</div><h1>نقرتك.<br><span>بصوتك.</span></h1><p>حوّل سويتشات الكيبورد المفضلة لديك إلى قطعة شخصية، مصنوعة للاسترخاء، التركيز، وإرضاء حبك للنقر.</p><div class="hero-actions"><button class="btn-primary hero-btn" data-scroll="configurator">ابدأ التصميم <span>←</span></button><a href="#gallery" class="text-link"><i>▶</i> شاهد التصاميم</a></div><div class="hero-proof"><div class="avatars"><span>م</span><span>ع</span><span>س</span><span>+</span></div><div><b>+١٢٠٠ عميل سعيد</b><span>★★★★★ <small>4.9</small></span></div></div></div>
+  <div class="hero-copy"><div class="hero-badge"><i></i> منتج من RavenLab</div><h1>نقرتك.<br><span>بتصميمك.</span></h1><p>صمّم كليكر سويتشات ميكانيكية يعكس أسلوبك. اختر كل كيكاب بشكل مستقل وشاهد النتيجة ثلاثية الأبعاد فورًا.</p><div class="hero-actions"><button class="btn-primary hero-btn" data-scroll="configurator">ابدأ التصميم <span>←</span></button><a href="#gallery" class="text-link"><i>▶</i> شاهد التصاميم</a></div><div class="hero-proof"><div class="avatars"><span>م</span><span>ع</span><span>س</span><span>+</span></div><div><b>+١٢٠٠ عميل سعيد</b><span>★★★★★ <small>4.9</small></span></div></div></div>
   <div class="hero-visual"><div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div><div id="heroPreview"></div><div class="floating-note note-one"><i style="background:#3c73d9"></i><span><small>السويتش</small><b>Cherry MX Blue</b></span></div><div class="floating-note note-two"><span>⌁</span><div><small>مصنوع لك</small><b>١٠٠٪ قابل للتخصيص</b></div></div></div>
 </section>
 
@@ -189,14 +191,14 @@ footer { border-top: 1px solid var(--line); background: var(--bg-deep); }.footer
   <div class="section-heading config-heading"><div><span class="eyebrow">صمّمه بطريقتك</span><h2>كل نقرة، على مزاجك.</h2></div><p>خمسة اختيارات بسيطة تفصلك عن كليكر مصنوع لك.</p></div>
   <div class="config-layout">
     <div class="config-form glass-card"><div class="stepper" id="stepper"></div><div class="step-content" id="stepContent"></div><div class="step-actions"><button class="btn-ghost" id="prevStep">السابق</button><button class="btn-primary" id="nextStep">التالي <span>←</span></button></div></div>
-    <aside class="preview-panel"><div class="preview-card glass-card"><div class="preview-top"><span>معاينة مباشرة</span><small><i></i> يتم التحديث الآن</small></div><div id="livePreview"></div><div class="preview-colors" id="previewColors"></div></div><div class="summary-card glass-card"><div class="price-line"><span>السعر النهائي<small>يشمل جميع اختياراتك</small></span><strong id="totalPrice"></strong></div><div class="summary-grid" id="summary"></div><button class="add-cart" id="addCart">إضافة إلى السلة <span id="cartPrice"></span></button></div></aside>
+    <aside class="preview-panel"><div class="preview-card glass-card"><div class="preview-top"><span><b class="live-3d-badge">3D</b> معاينة تفاعلية</span><small><i></i> اسحب المنتج لتدويره</small></div><div id="livePreview"></div><div class="preview-colors" id="previewColors"></div></div><div class="summary-card glass-card"><div class="price-line"><span>السعر النهائي<small>يشمل جميع اختياراتك</small></span><strong id="totalPrice"></strong></div><div class="summary-grid" id="summary"></div><button class="add-cart" id="addCart">إضافة إلى السلة <span id="cartPrice"></span></button></div></aside>
   </div>
   <div class="toast" id="toast"><span>✓</span><div><b>تمت الإضافة إلى السلة</b><small>حُفظ تصميمك بنجاح</small></div></div>
 </section>
 
-<section id="gallery" class="gallery section-shell"><div class="section-heading row"><div><span class="eyebrow">إلهامك القادم</span><h2>تصاميم من مجتمع نَقْرة.</h2></div><p>كل قطعة تبدأ من نفس الفكرة،<br>وتنتهي بشخصية مختلفة.</p></div><div class="gallery-grid" id="galleryGrid"></div></section>
+<section id="gallery" class="gallery section-shell"><div class="section-heading row"><div><span class="eyebrow">إلهامك القادم</span><h2>تصاميم من مجتمع RavenLab.</h2></div><p>كل قطعة تبدأ من نفس الفكرة،<br>وتنتهي بشخصية مختلفة.</p></div><div class="gallery-grid" id="galleryGrid"></div></section>
 
-<section id="reviews" class="reviews"><div class="section-shell"><div class="section-heading centered"><span class="eyebrow">قالوا عن النَّقرة</span><h2>حب من أول ضغطة.</h2></div><div class="review-grid">
+<section id="reviews" class="reviews"><div class="section-shell"><div class="section-heading centered"><span class="eyebrow">قالوا عن RavenLab</span><h2>حب من أول ضغطة.</h2></div><div class="review-grid">
   <article><div class="stars">★★★★★</div><p>“التغليف والتفاصيل أحلى مما توقعت. صوت الـ Blue بالضبط مثل ما أريده، وصار معي طول الوقت.”</p><div class="review-person"><i>م ف</i><span><b>مصطفى فاضل</b><small>بغداد · مشتري موثّق</small></span></div></article>
   <article class="featured"><div class="stars">★★★★★</div><p>“صممت واحد وردي بحرفي. الموقع سهل والنتيجة وصلت مطابقة تمامًا للتصميم.”</p><div class="review-person"><i>ز ع</i><span><b>زينب علي</b><small>أربيل · مشتري موثّق</small></span></div></article>
   <article><div class="stars">★★★★★</div><p>“أخيرًا شيء بسيط لكن فعلاً ممتع. أبدّل السويتش حسب مزاجي والتجميع نظيف جدًا.”</p><div class="review-person"><i>ح ك</i><span><b>حسن كريم</b><small>البصرة · مشتري موثّق</small></span></div></article>
@@ -210,119 +212,142 @@ footer { border-top: 1px solid var(--line); background: var(--bg-deep); }.footer
 </div></section>
 </main>
 
-<footer><div class="section-shell footer-main"><div class="footer-brand"><a class="logo"><i>ن</i><span>نَقْرة<small>CLICKERS</small></span></a><p>نحوّل صوتك المفضل إلى شيء<br>تقدر تمسكه بيدك.</p></div><div><b>استكشف</b><a href="#configurator">صمم كليكرك</a><a href="#gallery">التصاميم</a><a href="#features">عن نَقْرة</a></div><div><b>المساعدة</b><a href="#faq">الأسئلة الشائعة</a><a href="#">الشحن والتوصيل</a><a href="#">سياسة الاستبدال</a></div><div><b>تابعنا</b><a href="#">Instagram ↗</a><a href="#">TikTok ↗</a><a href="#">X / Twitter ↗</a></div></div><div class="section-shell footer-bottom"><span>© ٢٠٢٦ نَقْرة. كل الحقوق محفوظة.</span><span>صُنع بحب في العراق 🇮🇶</span></div></footer>
-<script>// Product catalogue: these arrays are the single source of truth and can be
-// replaced by API/database responses later without changing the UI renderer.
+<footer><div class="section-shell footer-main"><div class="footer-brand"><a class="logo"><i>R</i><span>RavenLab<small>CUSTOM CLICKERS</small></span></a><p>هندسة دقيقة. تصميم شخصي.<br>نقرة مصنوعة بطريقتك.</p></div><div><b>استكشف</b><a href="#configurator">صمم كليكرك</a><a href="#gallery">التصاميم</a><a href="#features">عن RavenLab</a></div><div><b>المساعدة</b><a href="#faq">الأسئلة الشائعة</a><a href="#">الشحن والتوصيل</a><a href="#">سياسة الاستبدال</a></div><div><b>تابعنا</b><a href="#">Instagram ↗</a><a href="#">TikTok ↗</a><a href="#">X / Twitter ↗</a></div></div><div class="section-shell footer-bottom"><span>© ٢٠٢٦ RavenLab. كل الحقوق محفوظة.</span><span>Designed by RavenLab</span></div></footer>
+<script>// RavenLab catalogue — replace these arrays with API responses when a backend is connected.
 const PRICES = { base: 7000, letterPrinting: 1500, keychain: 3000 };
 const colors = [
-  { id:"black", name:"أسود", value:"#15171a" }, { id:"white", name:"أبيض", value:"#ece9e1" },
-  { id:"gray", name:"رمادي", value:"#72777e" }, { id:"red", name:"أحمر", value:"#d6483f" },
-  { id:"blue", name:"أزرق", value:"#3468d4" }, { id:"green", name:"أخضر", value:"#3b8263" },
-  { id:"yellow", name:"أصفر", value:"#e7bd3a" }, { id:"orange", name:"برتقالي", value:"#df762f" },
-  { id:"purple", name:"بنفسجي", value:"#7958a6" }, { id:"pink", name:"وردي", value:"#e58fa8" },
-  { id:"clear", name:"شفاف", value:"rgba(218,229,230,.42)", transparent:true }
+  {id:"black",name:"أسود",value:"#101210"},{id:"white",name:"أبيض",value:"#f3f3ef"},{id:"gray",name:"رمادي",value:"#72777e"},
+  {id:"red",name:"أحمر",value:"#d6483f"},{id:"blue",name:"أزرق",value:"#3468d4"},{id:"green",name:"أخضر",value:"#5e862f"},
+  {id:"raven",name:"أخضر Raven",value:"#9cc03d"},{id:"yellow",name:"أصفر",value:"#e7bd3a"},{id:"orange",name:"برتقالي",value:"#df762f"},
+  {id:"purple",name:"بنفسجي",value:"#7958a6"},{id:"pink",name:"وردي",value:"#e58fa8"},{id:"clear",name:"شفاف",value:"rgba(218,229,230,.42)",transparent:true}
 ];
 const switchTypes = [
-  { id:"cherry-blue", name:"Cherry MX Blue", family:"Cherry MX", price:1800, description:"نقرة واضحة وصوت كلاسيكي مُرضٍ.", accent:"#3c73d9", image:"/products/switches/cherry-blue.webp" },
-  { id:"cherry-brown", name:"Cherry MX Brown", family:"Cherry MX", price:1800, description:"إحساس لمسي هادئ ومتوازن.", accent:"#8c5638", image:"/products/switches/cherry-brown.webp" },
-  { id:"cherry-red", name:"Cherry MX Red", family:"Cherry MX", price:1750, description:"حركة خطية ناعمة وخفيفة.", accent:"#d84943", image:"/products/switches/cherry-red.webp" },
-  { id:"gateron-blue", name:"Gateron Blue", family:"Gateron", price:1500, description:"نقرة مرحة بضغط خفيف.", accent:"#5b8de0", image:"/products/switches/gateron-blue.webp" },
-  { id:"gateron-brown", name:"Gateron Brown", family:"Gateron", price:1500, description:"لمسة ناعمة للاستخدام اليومي.", accent:"#a56b4e", image:"/products/switches/gateron-brown.webp" },
-  { id:"gateron-red", name:"Gateron Red", family:"Gateron", price:1450, description:"سريع وانسيابي بدون نتوء.", accent:"#ed615a", image:"/products/switches/gateron-red.webp" },
-  { id:"kailh-white", name:"Kailh Box White", family:"Kailh Box", price:2000, description:"نقرة حادة مع مقاومة للغبار.", accent:"#e9e6dc", image:"/products/switches/kailh-white.webp" }
+  {id:"cherry-blue",name:"Cherry MX Blue",family:"Cherry MX",price:1800,description:"نقرة واضحة وصوت كلاسيكي مُرضٍ.",accent:"#3c73d9",image:"/products/switches/cherry-blue.webp"},
+  {id:"cherry-brown",name:"Cherry MX Brown",family:"Cherry MX",price:1800,description:"إحساس لمسي هادئ ومتوازن.",accent:"#8c5638",image:"/products/switches/cherry-brown.webp"},
+  {id:"cherry-red",name:"Cherry MX Red",family:"Cherry MX",price:1750,description:"حركة خطية ناعمة وخفيفة.",accent:"#d84943",image:"/products/switches/cherry-red.webp"},
+  {id:"gateron-blue",name:"Gateron Blue",family:"Gateron",price:1500,description:"نقرة مرحة بضغط خفيف.",accent:"#5b8de0",image:"/products/switches/gateron-blue.webp"},
+  {id:"gateron-brown",name:"Gateron Brown",family:"Gateron",price:1500,description:"لمسة ناعمة للاستخدام اليومي.",accent:"#a56b4e",image:"/products/switches/gateron-brown.webp"},
+  {id:"gateron-red",name:"Gateron Red",family:"Gateron",price:1450,description:"سريع وانسيابي بدون نتوء.",accent:"#ed615a",image:"/products/switches/gateron-red.webp"},
+  {id:"kailh-white",name:"Kailh Box White",family:"Kailh Box",price:2000,description:"نقرة حادة مع مقاومة للغبار.",accent:"#e9e6dc",image:"/products/switches/kailh-white.webp"}
 ];
 const specialKeycaps = [
-  { id:"oreo", name:"أوريو", symbol:"◉", price:3000, image:"/products/keycaps/oreo.webp" },
-  { id:"cake", name:"كيك", symbol:"♜", price:3500, image:"/products/keycaps/cake.webp" },
-  { id:"cookie", name:"كوكي", symbol:"✣", price:3000, image:"/products/keycaps/cookie.webp" },
-  { id:"donut", name:"دونات", symbol:"◎", price:3500, image:"/products/keycaps/donut.webp" },
-  { id:"paw", name:"كف قطة", symbol:"♣", price:4000, image:"/products/keycaps/cat-paw.webp" },
-  { id:"controller", name:"يد تحكم", symbol:"✣", price:4000, image:"/products/keycaps/controller.webp" },
-  { id:"heart", name:"قلب", symbol:"♥", price:2500, image:"/products/keycaps/heart.webp" },
-  { id:"skull", name:"جمجمة", symbol:"☠", price:4000, image:"/products/keycaps/skull.webp" },
-  { id:"star", name:"نجمة", symbol:"★", price:2500, image:"/products/keycaps/star.webp" },
-  { id:"cloud", name:"غيمة", symbol:"☁", price:2500, image:"/products/keycaps/cloud.webp" },
-  { id:"smile", name:"ابتسامة", symbol:"☺", price:2500, image:"/products/keycaps/smile.webp" }
+  {id:"oreo",name:"أوريو",symbol:"◉",price:3000,image:"/products/keycaps/oreo.webp"},{id:"cake",name:"كيك",symbol:"♜",price:3500,image:"/products/keycaps/cake.webp"},
+  {id:"cookie",name:"كوكي",symbol:"✣",price:3000,image:"/products/keycaps/cookie.webp"},{id:"donut",name:"دونات",symbol:"◎",price:3500,image:"/products/keycaps/donut.webp"},
+  {id:"paw",name:"كف قطة",symbol:"♣",price:4000,image:"/products/keycaps/cat-paw.webp"},{id:"controller",name:"يد تحكم",symbol:"✣",price:4000,image:"/products/keycaps/controller.webp"},
+  {id:"heart",name:"قلب",symbol:"♥",price:2500,image:"/products/keycaps/heart.webp"},{id:"skull",name:"جمجمة",symbol:"☠",price:4000,image:"/products/keycaps/skull.webp"},
+  {id:"star",name:"نجمة",symbol:"★",price:2500,image:"/products/keycaps/star.webp"},{id:"cloud",name:"غيمة",symbol:"☁",price:2500,image:"/products/keycaps/cloud.webp"},
+  {id:"smile",name:"ابتسامة",symbol:"☺",price:2500,image:"/products/keycaps/smile.webp"}
 ];
-const chars = { english:[..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"], numbers:[..."0123456789"], arabic:[..."ابتثجحخدذرزسشصضطظعغفقكلمنهوي"], symbols:["!","?","#","@","&","+","−","♥","★","☻"] };
-const keychainTypes = [{id:"ring",name:"حلقة كلاسيكية",price:0},{id:"carabiner",name:"مشبك معدني",price:1000},{id:"strap",name:"حبل معصم",price:1500}];
-const chainColors = [{id:"silver",name:"فضي",value:"#bfc3c7"},{id:"black",name:"أسود",value:"#242528"},{id:"gold",name:"ذهبي",value:"#d8ab54"},{id:"blue",name:"أزرق",value:"#4d7dcf"},{id:"pink",name:"وردي",value:"#dc8faa"}];
-const steps = ["العدد","لون القاعدة","السويتش","الكيكاب","الميدالية"];
-const state = { step:0, count:3, baseColor:"black", switchType:"cherry-blue", category:"plain", keycapColor:"white", character:"A", charGroup:"english", textColor:"black", special:"oreo", keychain:false, chainType:"ring", chainColor:"silver" };
+const chars={english:[..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"],numbers:[..."0123456789"],arabic:[..."ابتثجحخدذرزسشصضطظعغفقكلمنهوي"],symbols:["!","?","#","@","&","+","−","♥","★","☻"]};
+const keychainTypes=[{id:"ring",name:"حلقة كلاسيكية",price:0},{id:"carabiner",name:"مشبك معدني",price:1000},{id:"strap",name:"حبل معصم",price:1500}];
+const chainColors=[{id:"silver",name:"فضي",value:"#bfc3c7"},{id:"black",name:"أسود",value:"#242528"},{id:"gold",name:"ذهبي",value:"#d8ab54"},{id:"raven",name:"أخضر Raven",value:"#9cc03d"}];
+const steps=["العدد","لون القاعدة","السويتش","الكيكاب","الميدالية"];
+const defaultKey=()=>({category:"plain",color:"white",character:"A",textColor:"black",special:"oreo"});
+const state={step:0,count:3,baseColor:"black",switchType:"cherry-blue",keys:Array.from({length:3},defaultKey),selectedKeys:[0],charGroup:"english",keychain:false,chainType:"ring",chainColor:"silver"};
 
-const $ = (selector) => document.querySelector(selector);
-const find = (list,id) => list.find(item => item.id === id);
-const money = value => new Intl.NumberFormat("ar-IQ").format(value) + " د.ع";
-const price = () => {
-  const sw = find(switchTypes,state.switchType), special = find(specialKeycaps,state.special), chain = find(keychainTypes,state.chainType);
-  return PRICES.base + state.count * sw.price + (state.category === "special" ? special.price : 0) + (state.category === "letter" ? PRICES.letterPrinting : 0) + (state.keychain ? PRICES.keychain + chain.price : 0);
-};
+const $=selector=>document.querySelector(selector);
+const find=(list,id)=>list.find(item=>item.id===id);
+const money=value=>new Intl.NumberFormat("ar-IQ").format(value)+" د.ع";
+const activeKey=()=>state.keys[state.selectedKeys[0]]||state.keys[0];
+const applyToSelected=(property,value)=>state.selectedKeys.forEach(index=>{state.keys[index][property]=value;});
+const keyExtraPrice=key=>key.category==="special"?find(specialKeycaps,key.special).price:key.category==="letter"?PRICES.letterPrinting:0;
+const price=()=>PRICES.base+state.count*find(switchTypes,state.switchType).price+state.keys.reduce((sum,key)=>sum+keyExtraPrice(key),0)+(state.keychain?PRICES.keychain+find(keychainTypes,state.chainType).price:0);
 
-function previewHTML(options = {}) {
-  const s = { ...state, ...options }, base = find(colors,s.baseColor), cap = find(colors,s.keycapColor), sw = find(switchTypes,s.switchType), chain = find(chainColors,s.chainColor) || chainColors[0], special = find(specialKeycaps,s.special);
-  const keys = Array.from({length:s.count},(_,i) => `<div class="switch-stack" style="animation-delay:${i*45}ms"><div class="switch-body"><i></i></div><div class="keycap keycap-${s.category}">${s.category === "letter" ? `<b>${s.character}</b>` : s.category === "special" ? `<b>${special.symbol}</b>` : ""}</div></div>`).join("");
-  return `<div class="product-stage ${options.compact ? "compact" : ""}" style="--base:${base.value};--keycap:${cap.value};--key-text:${find(colors,s.textColor)?.value || "#111"};--switch:${sw.accent};--chain:${chain.value}"><div class="stage-glow"></div><div class="clicker-product count-${s.count} ${base.transparent ? "is-clear" : ""}">${s.keychain ? `<div class="keychain"><span></span><i></i></div>` : ""}<div class="base-shell"><div class="base-inset">${keys}</div><div class="brand-mark">نَقْرة</div></div></div>${options.compact ? "" : `<div class="drag-hint"><span>↻</span> اسحب للتدوير</div>`}</div>`;
+function ensureKeys(count){
+  if(state.keys.length<count) while(state.keys.length<count) state.keys.push(defaultKey());
+  if(state.keys.length>count) state.keys.length=count;
+  state.selectedKeys=state.selectedKeys.filter(i=>i<count);
+  if(!state.selectedKeys.length) state.selectedKeys=[0];
 }
 
-function stepHeader(number,title,subtitle) { return `<header class="step-header"><span>${number}</span><div><h3>${title}</h3><p>${subtitle}</p></div></header>`; }
-function colorGrid(list,selected,action,compact=false) { return `<div class="color-grid ${compact ? "compact" : ""}">${list.map(c => `<button data-action="${action}" data-value="${c.id}" class="${selected===c.id?"selected":""}" title="${c.name}"><i class="${c.transparent?"transparent":""}" style="background:${c.value}"></i><span>${c.name}</span></button>`).join("")}</div>`; }
+function previewHTML(options={}){
+  const s={...state,...options};
+  const base=find(colors,s.baseColor),sw=find(switchTypes,s.switchType),chain=find(chainColors,s.chainColor)||chainColors[0];
+  const previewKeys=options.keys||s.keys||Array.from({length:s.count},defaultKey);
+  const keys=Array.from({length:s.count},(_,i)=>{
+    const key=previewKeys[i]||previewKeys[0]||defaultKey(),cap=find(colors,key.color)||colors[1],text=find(colors,key.textColor)||colors[0],special=find(specialKeycaps,key.special)||specialKeycaps[0];
+    const label=key.category==="letter"?`<b>${key.character}</b>`:key.category==="special"?`<b>${special.symbol}</b>`:"";
+    return `<div class="switch-stack" style="animation-delay:${i*45}ms"><div class="switch-body"><i></i></div><div class="keycap keycap-${key.category}" style="--keycap:${cap.value};--key-text:${text.value}">${label}</div></div>`;
+  }).join("");
+  const interactive=options.compact?"":"interactive-3d";
+  return `<div class="product-stage ${interactive} ${options.compact?"compact":""}" data-3d style="--base:${base.value};--switch:${sw.accent};--chain:${chain.value};--rx:60deg;--rz:-19deg;--zoom:1"><div class="stage-glow"></div><div class="clicker-product count-${s.count} ${base.transparent?"is-clear":""}">${s.keychain?`<div class="keychain"><span></span><i></i></div>`:""}<div class="base-shell"><div class="base-inset">${keys}</div><div class="brand-mark">RAVENLAB</div></div></div>${options.compact?"":`<div class="drag-hint"><span>↻</span> اسحب للدوران · نقرتان لإعادة الضبط</div>`}</div>`;
+}
 
-function renderStep() {
-  let html = "";
-  if (state.step === 0) html = stepHeader("01","كم سويتش تريد؟","اختر الحجم المناسب لجيبك أو مكتبك.") + `<div class="number-grid">${Array.from({length:9},(_,i)=>i+1).map(n=>`<button data-action="count" data-value="${n}" class="${state.count===n?"selected":""}"><b>${n}</b><span>${n===1?"سويتش":"سويتشات"}</span></button>`).join("")}</div>`;
-  if (state.step === 1) html = stepHeader("02","اختر لون القاعدة","لون صلب أم شفاف؟ القرار لك.") + colorGrid(colors,state.baseColor,"baseColor");
-  if (state.step === 2) html = stepHeader("03","اختر إحساس النقرة","لكل سويتش صوت وشخصية مختلفة.") + `<div class="switch-list">${switchTypes.map(item=>`<button data-action="switchType" data-value="${item.id}" class="${state.switchType===item.id?"selected":""}"><span class="switch-thumb" style="--accent:${item.accent}"><i></i></span><span class="switch-copy"><small>${item.family}</small><b>${item.name}</b><em>${item.description}</em></span><strong>+${money(item.price)}<small>لكل سويتش</small></strong></button>`).join("")}</div>`;
-  if (state.step === 3) {
-    html = stepHeader("04","اختر تصميم الكيكاب","بسيط، مطبوع، أو قطعة صغيرة تلفت النظر.") + `<div class="category-tabs"><button data-action="category" data-value="plain" class="${state.category==="plain"?"active":""}"><span>●</span><b>سادة</b><small>ألوان نقية</small></button><button data-action="category" data-value="letter" class="${state.category==="letter"?"active":""}"><span>A</span><b>حروف</b><small>اطبع ما تحب</small></button><button data-action="category" data-value="special" class="${state.category==="special"?"active":""}"><span>★</span><b>مميز</b><small>تصاميم خاصة</small></button></div>`;
-    if (state.category === "plain") html += `<div class="sub-panel"><label>لون الكيكاب</label>${colorGrid(colors,state.keycapColor,"keycapColor")}</div>`;
-    if (state.category === "letter") html += `<div class="sub-panel letter-panel"><label>لون الكيكاب</label>${colorGrid(colors,state.keycapColor,"keycapColor",true)}<div class="field-label"><label>الحرف المطبوع</label><span>+${money(PRICES.letterPrinting)}</span></div><div class="character-tabs">${Object.keys(chars).map(g=>`<button data-action="charGroup" data-value="${g}" class="${state.charGroup===g?"active":""}">${({english:"English",numbers:"123",arabic:"عربي",symbols:"رموز"})[g]}</button>`).join("")}</div><div class="character-grid">${chars[state.charGroup].map(c=>`<button data-action="character" data-value="${c}" class="${state.character===c?"selected":""}">${c}</button>`).join("")}</div><label>لون الطباعة</label>${colorGrid(colors.filter(c=>!c.transparent),state.textColor,"textColor",true)}</div>`;
-    if (state.category === "special") html += `<div class="special-grid">${specialKeycaps.map(item=>`<button data-action="special" data-value="${item.id}" class="${state.special===item.id?"selected":""}"><span>${item.symbol}</span><b>${item.name}</b><small>+${money(item.price)}</small></button>`).join("")}</div>`;
+function attach3D(root=document){
+  root.querySelectorAll("[data-3d]").forEach(stage=>{
+    if(stage.dataset.ready)return; stage.dataset.ready="1";
+    let dragging=false,startX=0,startY=0,rx=60,rz=-19;
+    const set=()=>{stage.style.setProperty("--rx",`${rx}deg`);stage.style.setProperty("--rz",`${rz}deg`);};
+    stage.addEventListener("pointerdown",e=>{dragging=true;startX=e.clientX;startY=e.clientY;stage.setPointerCapture(e.pointerId);stage.classList.add("dragging");});
+    stage.addEventListener("pointermove",e=>{if(!dragging)return;rz+=(e.clientX-startX)*.35;rx=Math.max(24,Math.min(82,rx-(e.clientY-startY)*.25));startX=e.clientX;startY=e.clientY;set();});
+    const stop=()=>{dragging=false;stage.classList.remove("dragging");};stage.addEventListener("pointerup",stop);stage.addEventListener("pointercancel",stop);
+    stage.addEventListener("dblclick",()=>{rx=60;rz=-19;set();});
+    stage.addEventListener("wheel",e=>{e.preventDefault();const current=parseFloat(stage.style.getPropertyValue("--zoom"))||1;stage.style.setProperty("--zoom",Math.max(.8,Math.min(1.25,current-e.deltaY*.001)));},{passive:false});
+  });
+}
+
+function stepHeader(number,title,subtitle){return `<header class="step-header"><span>${number}</span><div><h3>${title}</h3><p>${subtitle}</p></div></header>`;}
+function colorGrid(list,selected,action,compact=false){return `<div class="color-grid ${compact?"compact":""}">${list.map(c=>`<button data-action="${action}" data-value="${c.id}" class="${selected===c.id?"selected":""}" title="${c.name}"><i class="${c.transparent?"transparent":""}" style="background:${c.value}"></i><span>${c.name}</span></button>`).join("")}</div>`;}
+function keySelector(){return `<div class="key-selector-wrap"><div class="key-selector-head"><div><b>حدد الكيكابات التي تريد تعديلها</b><small>يمكنك تحديد أكثر من زر وتطبيق التصميم عليها معًا</small></div><button data-action="selectAll">تحديد الكل</button></div><div class="key-selector">${state.keys.map((_,i)=>`<button data-action="selectKey" data-value="${i}" class="${state.selectedKeys.includes(i)?"selected":""}">${i+1}</button>`).join("")}</div></div>`;}
+
+function renderStep(){
+  let html=""; const key=activeKey();
+  if(state.step===0)html=stepHeader("01","كم سويتش تريد؟","اختر الحجم المناسب لجيبك أو مكتبك.")+`<div class="number-grid">${Array.from({length:9},(_,i)=>i+1).map(n=>`<button data-action="count" data-value="${n}" class="${state.count===n?"selected":""}"><b>${n}</b><span>${n===1?"سويتش":"سويتشات"}</span></button>`).join("")}</div>`;
+  if(state.step===1)html=stepHeader("02","اختر لون القاعدة","ألوان RavenLab الأساسية: الأسود، الأبيض، والأخضر.")+colorGrid(colors,state.baseColor,"baseColor");
+  if(state.step===2)html=stepHeader("03","اختر إحساس النقرة","لكل سويتش صوت وشخصية مختلفة.")+`<div class="switch-list">${switchTypes.map(item=>`<button data-action="switchType" data-value="${item.id}" class="${state.switchType===item.id?"selected":""}"><span class="switch-thumb" style="--accent:${item.accent}"><i></i></span><span class="switch-copy"><small>${item.family}</small><b>${item.name}</b><em>${item.description}</em></span><strong>+${money(item.price)}<small>لكل سويتش</small></strong></button>`).join("")}</div>`;
+  if(state.step===3){
+    html=stepHeader("04","صمّم كل كيكاب","حدد كيكابًا واحدًا أو عدة كيكابات، ثم طبّق التصميم عليها.")+keySelector()+`<p class="multi-key-note"><i></i> تعدّل الآن ${state.selectedKeys.length} من أصل ${state.count} كيكاب</p><div class="category-tabs"><button data-action="category" data-value="plain" class="${key.category==="plain"?"active":""}"><span>●</span><b>سادة</b><small>ألوان نقية</small></button><button data-action="category" data-value="letter" class="${key.category==="letter"?"active":""}"><span>A</span><b>حروف</b><small>اطبع ما تحب</small></button><button data-action="category" data-value="special" class="${key.category==="special"?"active":""}"><span>★</span><b>مميز</b><small>تصاميم خاصة</small></button></div>`;
+    if(key.category==="plain")html+=`<div class="sub-panel"><label>لون الكيكاب المحدد</label>${colorGrid(colors,key.color,"keyColor")}</div>`;
+    if(key.category==="letter")html+=`<div class="sub-panel letter-panel"><label>لون الكيكاب المحدد</label>${colorGrid(colors,key.color,"keyColor",true)}<div class="field-label"><label>الحرف المطبوع</label><span>+${money(PRICES.letterPrinting)} لكل كيكاب</span></div><div class="character-tabs">${Object.keys(chars).map(g=>`<button data-action="charGroup" data-value="${g}" class="${state.charGroup===g?"active":""}">${({english:"English",numbers:"123",arabic:"عربي",symbols:"رموز"})[g]}</button>`).join("")}</div><div class="character-grid">${chars[state.charGroup].map(c=>`<button data-action="character" data-value="${c}" class="${key.character===c?"selected":""}">${c}</button>`).join("")}</div><label>لون الطباعة</label>${colorGrid(colors.filter(c=>!c.transparent),key.textColor,"keyTextColor",true)}</div>`;
+    if(key.category==="special")html+=`<div class="special-grid">${specialKeycaps.map(item=>`<button data-action="keySpecial" data-value="${item.id}" class="${key.special===item.id?"selected":""}"><span>${item.symbol}</span><b>${item.name}</b><small>+${money(item.price)} لكل كيكاب</small></button>`).join("")}</div>`;
   }
-  if (state.step === 4) {
-    html = stepHeader("05","أضف ميدالية","خذه معك، أو اتركه قطعة هادئة على المكتب.") + `<div class="keychain-choice"><button data-action="keychain" data-value="false" class="${!state.keychain?"selected":""}"><span>−</span><b>بدون ميدالية</b><small>للاستخدام المكتبي</small></button><button data-action="keychain" data-value="true" class="${state.keychain?"selected":""}"><span>⌁</span><b>مع ميدالية</b><small>+${money(PRICES.keychain)}</small></button></div>`;
-    if (state.keychain) html += `<div class="sub-panel keychain-options"><label>نوع الميدالية</label><div class="select-grid">${keychainTypes.map(t=>`<button data-action="chainType" data-value="${t.id}" class="${state.chainType===t.id?"selected":""}"><b>${t.name}</b><small>${t.price?`+${money(t.price)}`:"مشمول"}</small></button>`).join("")}</div><label>لون المعدن</label>${colorGrid(chainColors,state.chainColor,"chainColor",true)}</div>`;
-  }
-  $("#stepContent").innerHTML = html;
+  if(state.step===4){html=stepHeader("05","أضف ميدالية","خذه معك، أو اتركه قطعة هادئة على المكتب.")+`<div class="keychain-choice"><button data-action="keychain" data-value="false" class="${!state.keychain?"selected":""}"><span>−</span><b>بدون ميدالية</b><small>للاستخدام المكتبي</small></button><button data-action="keychain" data-value="true" class="${state.keychain?"selected":""}"><span>⌁</span><b>مع ميدالية</b><small>+${money(PRICES.keychain)}</small></button></div>`;if(state.keychain)html+=`<div class="sub-panel keychain-options"><label>نوع الميدالية</label><div class="select-grid">${keychainTypes.map(t=>`<button data-action="chainType" data-value="${t.id}" class="${state.chainType===t.id?"selected":""}"><b>${t.name}</b><small>${t.price?`+${money(t.price)}`:"مشمول"}</small></button>`).join("")}</div><label>لون المعدن</label>${colorGrid(chainColors,state.chainColor,"chainColor",true)}</div>`;}
+  $("#stepContent").innerHTML=html;
 }
 
-function renderAll() {
-  $("#stepper").innerHTML = steps.map((label,i)=>`<button data-step="${i}" class="${state.step===i?"active":state.step>i?"done":""}"><i>${state.step>i?"✓":i+1}</i><span>${label}</span></button>`).join("");
-  renderStep();
-  $("#livePreview").innerHTML = previewHTML();
-  const base=find(colors,state.baseColor), cap=find(colors,state.keycapColor), sw=find(switchTypes,state.switchType), special=find(specialKeycaps,state.special), chain=find(keychainTypes,state.chainType), total=price();
-  $("#previewColors").innerHTML = `<span>القاعدة <i style="background:${base.value}"></i></span><span>الكيكاب <i style="background:${cap.value}"></i></span><span>السويتش <i style="background:${sw.accent}"></i></span>`;
-  $("#totalPrice").textContent = money(total); $("#cartPrice").textContent = money(total);
-  const entries = [["العدد",`${state.count} سويتش`],["القاعدة",base.name],["السويتش",sw.name],["الكيكاب",state.category==="special"?special.name:state.category==="letter"?`حرف ${state.character}`:"سادة"],["اللون",cap.name],["الميدالية",state.keychain?chain.name:"بدون"]];
-  $("#summary").innerHTML = entries.map(([label,value])=>`<div><span>${label}</span><b>${value}</b></div>`).join("");
-  $("#prevStep").disabled = state.step===0;
-  $("#nextStep").innerHTML = state.step===4 ? `إضافة إلى السلة <span>＋</span>` : `التالي <span>←</span>`;
+function renderAll(){
+  $("#stepper").innerHTML=steps.map((label,i)=>`<button data-step="${i}" class="${state.step===i?"active":state.step>i?"done":""}"><i>${state.step>i?"✓":i+1}</i><span>${label}</span></button>`).join("");
+  renderStep();$("#livePreview").innerHTML=previewHTML();attach3D($("#livePreview"));
+  const base=find(colors,state.baseColor),sw=find(switchTypes,state.switchType),chain=find(keychainTypes,state.chainType),total=price();
+  $("#previewColors").innerHTML=`<span>القاعدة <i style="background:${base.value}"></i></span><span>هوية RavenLab <i style="background:#9cc03d"></i></span><span>السويتش <i style="background:${sw.accent}"></i></span>`;
+  $("#totalPrice").textContent=money(total);$("#cartPrice").textContent=money(total);
+  const unique=new Set(state.keys.map(k=>`${k.category}-${k.color}-${k.character}-${k.special}`)).size;
+  const entries=[["العدد",`${state.count} سويتش`],["القاعدة",base.name],["السويتش",sw.name],["الكيكابات",`${unique} ${unique===1?"تصميم":"تصاميم"}`],["المخصص",`${state.keys.filter(k=>k.category!=="plain").length} كيكاب`],["الميدالية",state.keychain?chain.name:"بدون"]];
+  $("#summary").innerHTML=entries.map(([label,value])=>`<div><span>${label}</span><b>${value}</b></div>`).join("");$("#prevStep").disabled=state.step===0;$("#nextStep").innerHTML=state.step===4?`إضافة إلى السلة <span>＋</span>`:`التالي <span>←</span>`;
 }
 
-function addToCart() {
-  const sw=find(switchTypes,state.switchType), base=find(colors,state.baseColor), cap=find(colors,state.keycapColor), special=find(specialKeycaps,state.special), chain=find(keychainTypes,state.chainType);
-  const configuration = { switches:state.count, baseColor:base.id, switchType:sw.name, keycap:state.category==="special"?special.name:state.category==="letter"?`Letter ${state.character}`:cap.name, keycapColor:cap.id, letter:state.category==="letter"?state.character:null, textColor:state.category==="letter"?state.textColor:null, keychain:state.keychain, keychainType:state.keychain?chain.name:null, price:price() };
-  const cart = JSON.parse(localStorage.getItem("naqra-cart") || "[]"); cart.push(configuration); localStorage.setItem("naqra-cart",JSON.stringify(cart)); $("#cartCount").textContent=cart.length; $("#toast").classList.add("show"); setTimeout(()=>$("#toast").classList.remove("show"),2600);
+function addToCart(){
+  const sw=find(switchTypes,state.switchType),base=find(colors,state.baseColor),chain=find(keychainTypes,state.chainType);
+  const configuration={brand:"RavenLab",switches:state.count,baseColor:base.id,switchType:sw.name,keycaps:state.keys.map((key,index)=>({position:index+1,type:key.category,color:key.color,letter:key.category==="letter"?key.character:null,textColor:key.category==="letter"?key.textColor:null,design:key.category==="special"?find(specialKeycaps,key.special).name:null})),keychain:state.keychain,keychainType:state.keychain?chain.name:null,price:price()};
+  const cart=JSON.parse(localStorage.getItem("ravenlab-cart")||"[]");cart.push(configuration);localStorage.setItem("ravenlab-cart",JSON.stringify(cart));$("#cartCount").textContent=cart.length;$("#toast").classList.add("show");setTimeout(()=>$("#toast").classList.remove("show"),2600);
 }
 
-$("#stepContent").addEventListener("click", event => {
-  const button=event.target.closest("button[data-action]"); if(!button) return; const action=button.dataset.action, value=button.dataset.value;
-  if(action==="count") state.count=Number(value); else if(action==="keychain") state.keychain=value==="true"; else if(action==="charGroup") { state.charGroup=value; state.character=chars[value][0]; } else state[action]=value;
+$("#stepContent").addEventListener("click",event=>{
+  const button=event.target.closest("button[data-action]");if(!button)return;const action=button.dataset.action,value=button.dataset.value;
+  if(action==="count"){state.count=Number(value);ensureKeys(state.count);}
+  else if(action==="selectKey"){const i=Number(value);state.selectedKeys=state.selectedKeys.includes(i)?state.selectedKeys.filter(x=>x!==i):[...state.selectedKeys,i];if(!state.selectedKeys.length)state.selectedKeys=[i];state.selectedKeys.sort((a,b)=>a-b);}
+  else if(action==="selectAll")state.selectedKeys=Array.from({length:state.count},(_,i)=>i);
+  else if(action==="category")applyToSelected("category",value);
+  else if(action==="keyColor")applyToSelected("color",value);
+  else if(action==="character")applyToSelected("character",value);
+  else if(action==="keyTextColor")applyToSelected("textColor",value);
+  else if(action==="keySpecial")applyToSelected("special",value);
+  else if(action==="keychain")state.keychain=value==="true";
+  else if(action==="charGroup"){state.charGroup=value;applyToSelected("character",chars[value][0]);}
+  else state[action]=value;
   renderAll();
 });
 $("#stepper").addEventListener("click",e=>{const b=e.target.closest("button[data-step]");if(b){state.step=Number(b.dataset.step);renderAll();}});
 $("#prevStep").addEventListener("click",()=>{state.step=Math.max(0,state.step-1);renderAll();});
-$("#nextStep").addEventListener("click",()=>{if(state.step<4){state.step++;renderAll();}else addToCart();});
-$("#addCart").addEventListener("click",addToCart);
-$("#themeBtn").addEventListener("click",()=>{const dark=document.documentElement.dataset.theme==="dark";document.documentElement.dataset.theme=dark?"light":"dark";$("#themeBtn").textContent=dark?"◐":"☼";localStorage.setItem("naqra-theme",dark?"light":"dark");});
-$("#menuBtn").addEventListener("click",()=>$("#navLinks").classList.toggle("open"));
-document.querySelectorAll(".nav-links a").forEach(a=>a.addEventListener("click",()=>$("#navLinks").classList.remove("open")));
-document.querySelectorAll("[data-scroll]").forEach(b=>b.addEventListener("click",()=>document.getElementById(b.dataset.scroll)?.scrollIntoView({behavior:"smooth"})));
+$("#nextStep").addEventListener("click",()=>{if(state.step<4){state.step++;renderAll();}else addToCart();});$("#addCart").addEventListener("click",addToCart);
+$("#themeBtn").addEventListener("click",()=>{const dark=document.documentElement.dataset.theme==="dark";document.documentElement.dataset.theme=dark?"light":"dark";$("#themeBtn").textContent=dark?"◐":"☼";localStorage.setItem("ravenlab-theme",dark?"light":"dark");});
+$("#menuBtn").addEventListener("click",()=>$("#navLinks").classList.toggle("open"));document.querySelectorAll(".nav-links a").forEach(a=>a.addEventListener("click",()=>$("#navLinks").classList.remove("open")));document.querySelectorAll("[data-scroll]").forEach(b=>b.addEventListener("click",()=>document.getElementById(b.dataset.scroll)?.scrollIntoView({behavior:"smooth"})));
 
-const savedTheme=localStorage.getItem("naqra-theme"); if(savedTheme){document.documentElement.dataset.theme=savedTheme;$("#themeBtn").textContent=savedTheme==="dark"?"☼":"◐";}
-$("#cartCount").textContent=JSON.parse(localStorage.getItem("naqra-cart")||"[]").length;
-$("#heroPreview").innerHTML=previewHTML({count:4,category:"letter",character:"ن",keychain:true});
-const gallery=[{c:"large",base:"white",cap:"black",count:4,label:"MONO / 04"},{c:"",base:"pink",cap:"white",count:3,label:"SAKURA / 03"},{c:"",base:"blue",cap:"yellow",count:6,label:"RETRO / 06"},{c:"",base:"black",cap:"red",count:2,label:"EMBER / 02"},{c:"wide",base:"clear",cap:"white",count:5,label:"FROST / 05"}];
-$("#galleryGrid").innerHTML=gallery.map(g=>`<article class="gallery-card ${g.c}">${previewHTML({baseColor:g.base,keycapColor:g.cap,count:g.count,compact:true})}<span>${g.label}</span></article>`).join("");
+const savedTheme=localStorage.getItem("ravenlab-theme");if(savedTheme){document.documentElement.dataset.theme=savedTheme;$("#themeBtn").textContent=savedTheme==="dark"?"☼":"◐";}$("#cartCount").textContent=JSON.parse(localStorage.getItem("ravenlab-cart")||"[]").length;
+const heroKeys=[{...defaultKey(),category:"letter",character:"R",color:"black",textColor:"raven"},{...defaultKey(),color:"raven"},{...defaultKey(),category:"letter",character:"L",color:"black",textColor:"raven"},{...defaultKey(),category:"special",special:"star",color:"raven"}];
+$("#heroPreview").innerHTML=previewHTML({count:4,keys:heroKeys,keychain:true});attach3D($("#heroPreview"));
+const gallery=[{c:"large",base:"black",cap:"raven",count:4,label:"RAVEN / 04"},{c:"",base:"white",cap:"black",count:3,label:"MONO / 03"},{c:"",base:"raven",cap:"black",count:6,label:"LAB / 06"},{c:"",base:"black",cap:"white",count:2,label:"BINARY / 02"},{c:"wide",base:"clear",cap:"raven",count:5,label:"FROST / 05"}];
+$("#galleryGrid").innerHTML=gallery.map(g=>{const keys=Array.from({length:g.count},()=>({...defaultKey(),color:g.cap}));return `<article class="gallery-card ${g.c}">${previewHTML({baseColor:g.base,count:g.count,keys,compact:true})}<span>${g.label}</span></article>`;}).join("");
 renderAll();
 </script>
 </body></html>
